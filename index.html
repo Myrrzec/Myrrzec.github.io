@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Make — AI-assisted web developer · Portfolio</title>
+<meta name="description" content="I build small web apps and websites with AI and ship them live: full-stack apps, landing sites, hosting, SEO basics. Two live projects with source code." />
+<link rel="canonical" href="https://myrrzec.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Make — AI-assisted web developer" />
+<meta property="og:description" content="Two live projects with source code: an AI calorie tracker and an SEO-ready business website." />
+<meta property="og:url" content="https://myrrzec.github.io/" />
+<link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/style.css" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Make",
+  "jobTitle": "AI-assisted web developer",
+  "url": "https://myrrzec.github.io/",
+  "sameAs": ["https://github.com/Myrrzec"]
+}
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="logo" href="#top">Make<span>.</span></a>
+    <nav class="menu" aria-label="Main">
+      <a href="#work" data-i18n="nav_work">Work</a>
+      <a href="#how" data-i18n="nav_how">How I work</a>
+      <a href="#skills" data-i18n="nav_skills">Skills</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="tag" data-i18n="hero_tag">AI-assisted web developer</p>
+      <h1 data-i18n="hero_h1">I build web apps with AI and ship them live.</h1>
+      <p class="lead" data-i18n="hero_lead">Full-stack apps, landing sites and deployments, from idea to a working URL. Every project below is live and comes with its source code.</p>
+      <div class="actions">
+        <a class="btn primary" href="#work" data-i18n="hero_cta1">See my work</a>
+        <a class="btn ghost" href="https://github.com/Myrrzec" target="_blank" rel="noopener" data-i18n="hero_cta2">GitHub profile</a>
+      </div>
+      <p class="honest" data-i18n="hero_honest"><strong>How I work, honestly:</strong> I direct an AI pair-programmer (Claude) to write most of the code. I own the requirements, test everything in a real browser, deploy it, and can explain every decision.</p>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <h2 data-i18n="work_h2">Selected work</h2>
+      <p class="sub" data-i18n="work_sub">Two projects, two different kinds of job: a full-stack app with AI, and a hand-coded business website.</p>
+
+      <article class="project">
+        <div class="shot shot-tracker" aria-hidden="true">
+          <div class="ring"><b>2560</b><i>/ 3480 kcal</i></div>
+          <div class="bars"><span style="--w:100%;--c:#c8ff4d"></span><span style="--w:100%;--c:#ff9a4d"></span><span style="--w:31%;--c:#b79cff"></span></div>
+        </div>
+        <div class="body">
+          <h3>KBJU Tracker <small data-i18n="p1_kind">Full-stack app · AI</small></h3>
+          <p class="chips"><span>Python · FastAPI</span><span>PostgreSQL</span><span>React · TypeScript</span><span>Tailwind</span><span>Claude API</span></p>
+          <p data-i18n="p1_sum">A calorie and macro tracker. You photograph a meal and AI estimates calories, protein, fat and carbs, which you can correct before saving to a daily diary.</p>
+          <h4 data-i18n="built_h">What I built</h4>
+          <ul data-i18n="p1_built">
+            <li>Sign-up and login with JWT tokens, user profile and daily targets from the Mifflin-St Jeor formula</li>
+            <li>Food-photo recognition with Claude Vision, returning structured JSON through tool use</li>
+            <li>Diary with meals grouped by photo or time (Lunch 1, Lunch 2), inline editing, recent dishes, AI advice</li>
+            <li>Responsive dark UI built from a written design brief; deployed as three separate services</li>
+          </ul>
+          <h4 data-i18n="hard_h">Problems I solved</h4>
+          <ul data-i18n="p1_hard">
+            <li>The AI refused unclear photos, so I rewrote the prompt to give a best-effort estimate with a confidence level and a note</li>
+            <li>Entries near midnight landed on the wrong day, so day boundaries now use the user's timezone</li>
+            <li>Raw API errors leaked to users, so they are mapped to short readable messages</li>
+          </ul>
+          <p class="note" data-i18n="p1_note">Free hosting: the first request after a pause can take 30–50 seconds while the server wakes up.</p>
+          <p class="links">
+            <a class="btn primary" href="https://kbju-tracker.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
+            <a class="btn ghost" href="https://github.com/Myrrzec/kbju-tracker" target="_blank" rel="noopener" data-i18n="code">Source code</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="shot shot-pilates" aria-hidden="true">
+          <div class="p-nav"><i></i><i></i><i></i></div>
+          <div class="p-hero"><span></span><span></span><b></b></div>
+        </div>
+        <div class="body">
+          <h3>Evergreen Pilates <small data-i18n="p2_kind">Business website · SEO</small></h3>
+          <p class="chips"><span>HTML · CSS · JavaScript</span><span>Technical SEO</span><span>Cloudflare Pages</span><span>GitHub</span></p>
+          <p data-i18n="p2_sum">A hand-coded marketing site for a fictional boutique studio, built to show the full launch job: page structure, technical SEO, hosting and automatic deploys.</p>
+          <h4 data-i18n="built_h">What I built</h4>
+          <ul data-i18n="p2_built">
+            <li>Home, about, classes with pricing and FAQ, contact form, four-post blog, legal pages, custom 404</li>
+            <li>Unique titles and descriptions, canonical URLs, Open Graph, structured data, sitemap.xml and robots.txt</li>
+            <li>Security headers and caching rules, mobile navigation, a form ready for a form service</li>
+            <li>Every push to GitHub redeploys the site automatically</li>
+          </ul>
+          <h4 data-i18n="hard_h">Problems I solved</h4>
+          <ul data-i18n="p2_hard">
+            <li>The mobile menu collapsed to a thin strip: a blurred header creates a new positioning context for fixed elements, so I replaced the blur with a solid background</li>
+            <li>Kept thin legal pages out of the index on purpose (noindex) and out of the sitemap</li>
+          </ul>
+          <p class="note" data-i18n="p2_note">The business, address and people are fictional; the footer says so.</p>
+          <p class="links">
+            <a class="btn primary" href="https://evergreen-pilates-site.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
+            <a class="btn ghost" href="https://github.com/Myrrzec/evergreen-pilates-site" target="_blank" rel="noopener" data-i18n="code">Source code</a>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="how" class="alt">
+    <div class="wrap">
+      <h2 data-i18n="how_h2">How I work</h2>
+      <p class="sub" data-i18n="how_sub">A repeatable process, so you know what to expect.</p>
+      <ol class="steps">
+        <li><b data-i18n="s1_t">1. Clarify</b><span data-i18n="s1_d">We agree on the goal, the pages or features, and what "done" means before any code.</span></li>
+        <li><b data-i18n="s2_t">2. Build with AI</b><span data-i18n="s2_d">I work with Claude Code in small steps and review what it writes instead of accepting it blindly.</span></li>
+        <li><b data-i18n="s3_t">3. Test for real</b><span data-i18n="s3_d">I click through it in a browser, on desktop and mobile, and fix what breaks.</span></li>
+        <li><b data-i18n="s4_t">4. Ship and explain</b><span data-i18n="s4_d">Code goes to your GitHub, the site goes live, and you get a short handover: what is where and how to change it.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <h2 data-i18n="skills_h2">Skills and tools</h2>
+      <div class="grid3">
+        <div>
+          <h4 data-i18n="sk1_h">Build</h4>
+          <p class="chips"><span>Python</span><span>FastAPI</span><span>TypeScript</span><span>React</span><span>Tailwind CSS</span><span>HTML/CSS/JS</span><span>Vite</span></p>
+        </div>
+        <div>
+          <h4 data-i18n="sk2_h">Data and AI</h4>
+          <p class="chips"><span>PostgreSQL</span><span>SQLAlchemy</span><span>Alembic</span><span>JWT auth</span><span>Claude API</span><span>Prompt design</span></p>
+        </div>
+        <div>
+          <h4 data-i18n="sk3_h">Ship</h4>
+          <p class="chips"><span>Git · GitHub</span><span>Cloudflare Pages</span><span>Render</span><span>DNS basics</span><span>Technical SEO</span></p>
+        </div>
+      </div>
+
+      <div class="fit">
+        <div>
+          <h4 data-i18n="fit_yes_h">Good fit</h4>
+          <ul data-i18n="fit_yes">
+            <li>Landing pages and small business websites</li>
+            <li>Launching a finished static site: hosting, HTTPS, sitemap, checks</li>
+            <li>Small full-stack apps: accounts, database, dashboards</li>
+            <li>Adding an AI feature, such as photo or text analysis</li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="fit_no_h">Not yet</h4>
+          <ul data-i18n="fit_no">
+            <li>WordPress and page-builder work</li>
+            <li>Large or legacy codebases</li>
+            <li>Handling sensitive or regulated data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="alt">
+    <div class="wrap center">
+      <h2 data-i18n="contact_h2">Let's build something</h2>
+      <p class="sub" data-i18n="contact_sub">The fastest way to see how I work is the code and the live projects above.</p>
+      <p class="links center">
+        <a class="btn primary" href="https://github.com/Myrrzec" target="_blank" rel="noopener">GitHub · Myrrzec</a>
+        <!-- Add the Upwork profile link here once the profile is live. -->
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Make</span>
+    <span data-i18n="foot">Built with AI and shipped on GitHub Pages.</span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
