@@ -3,24 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Make — AI-assisted web developer · Portfolio</title>
-<meta name="description" content="I build small web apps and websites with AI and ship them live: full-stack apps, landing sites, hosting, SEO basics. Two live projects with source code." />
+<title>Make — Web Developer</title>
+<meta name="description" content="Make is a web developer: full-stack apps and websites, from idea to a live URL. Two live projects with source code." />
+<meta name="theme-color" content="#0a0a0a" />
 <link rel="canonical" href="https://myrrzec.github.io/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Make — AI-assisted web developer" />
-<meta property="og:description" content="Two live projects with source code: an AI calorie tracker and a bilingual business website concept." />
+<meta property="og:title" content="Make — Web Developer" />
+<meta property="og:description" content="Two live projects with source code: an interactive campus walkthrough and a full-stack calorie tracker." />
 <meta property="og:url" content="https://myrrzec.github.io/" />
 <link rel="icon" href="data:," />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@800&family=Onest:wght@800&family=Instrument+Serif:ital@1&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/css/style.css" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Make",
-  "jobTitle": "AI-assisted web developer",
+  "jobTitle": "Web developer",
   "url": "https://myrrzec.github.io/",
   "sameAs": ["https://github.com/Myrrzec"]
 }
@@ -28,173 +29,222 @@
 </head>
 <body>
 
-<header class="topbar">
-  <div class="wrap bar">
-    <a class="logo" href="#top">Make<span>.</span></a>
-    <nav class="menu" aria-label="Main">
-      <a href="#work" data-i18n="nav_work">Work</a>
-      <a href="#how" data-i18n="nav_how">How I work</a>
-      <a href="#skills" data-i18n="nav_skills">Skills</a>
-      <a href="#contact" data-i18n="nav_contact">Contact</a>
-    </nav>
-    <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang="en" aria-pressed="true">EN</button>
-      <button type="button" data-lang="ru" aria-pressed="false">RU</button>
-    </div>
+<header class="nav">
+  <a class="logo" href="#top" aria-label="Make, top of page">Make</a>
+  <nav class="pills" aria-label="Main">
+    <a class="pill pill-work" href="#work" data-i18n="nav_work">Work</a>
+    <a class="pill pill-about" href="#about" data-i18n="nav_about">About</a>
+    <a class="pill pill-contact" href="#contact" data-i18n="nav_contact">Contact</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" data-lang="ru" aria-pressed="false">RU</button>
   </div>
 </header>
 
-<main id="top">
+<main>
 
-  <section class="hero">
-    <div class="wrap">
-      <p class="tag" data-i18n="hero_tag">AI-assisted web developer</p>
-      <h1 data-i18n="hero_h1">I build web apps with AI and ship them live.</h1>
-      <p class="lead" data-i18n="hero_lead">Full-stack apps, landing sites and deployments, from idea to a working URL. Every project below is live and comes with its source code.</p>
-      <div class="actions">
-        <a class="btn primary" href="#work" data-i18n="hero_cta1">See my work</a>
-        <a class="btn ghost" href="https://github.com/Myrrzec" target="_blank" rel="noopener" data-i18n="hero_cta2">GitHub profile</a>
-      </div>
-      <p class="honest" data-i18n="hero_honest"><strong>How I work, honestly:</strong> I direct an AI pair-programmer (Claude) to write most of the code. I own the requirements, test everything in a real browser, deploy it, and can explain every decision.</p>
+  <section class="panel hero" id="top">
+    <div class="hero__bg" aria-hidden="true">
+      <img src="/assets/img/me.webp" width="1261" height="1247" alt="" fetchpriority="high" decoding="async" />
     </div>
+    <div class="hero__copy">
+      <p class="hello serif" data-i18n="hero_hello">Hi, I'm Make.</p>
+      <p class="lead" data-i18n="hero_lead">I build interactive web experiences and full-stack apps, from the first click to a live URL.</p>
+    </div>
+    <h1 class="hero__title" data-i18n="hero_h1"><span>Web</span> <span>Developer</span></h1>
   </section>
 
-  <section id="work">
-    <div class="wrap">
-      <h2 data-i18n="work_h2">Selected work</h2>
-      <p class="sub" data-i18n="work_sub">Two projects, two different kinds of job: a full-stack app with AI, and a hand-coded bilingual website concept.</p>
-
-      <article class="project">
-        <div class="shot shot-tracker" aria-hidden="true">
-          <div class="ring"><b>2560</b><i>/ 3480 kcal</i></div>
-          <div class="bars"><span style="--w:100%;--c:#c8ff4d"></span><span style="--w:100%;--c:#ff9a4d"></span><span style="--w:31%;--c:#b79cff"></span></div>
-        </div>
-        <div class="body">
-          <h3>KBJU Tracker <small data-i18n="p1_kind">Full-stack app · AI</small></h3>
-          <p class="chips"><span>Python · FastAPI</span><span>PostgreSQL</span><span>React · TypeScript</span><span>Tailwind</span><span>Claude API</span></p>
-          <p data-i18n="p1_sum">A calorie and macro tracker. You photograph a meal and AI estimates calories, protein, fat and carbs, which you can correct before saving to a daily diary.</p>
-          <h4 data-i18n="built_h">What I built</h4>
-          <ul data-i18n="p1_built">
-            <li>Sign-up and login with JWT tokens, user profile and daily targets from the Mifflin-St Jeor formula</li>
-            <li>Food-photo recognition with Claude Vision, returning structured JSON through tool use</li>
-            <li>Diary with meals grouped by photo or time (Lunch 1, Lunch 2), inline editing, recent dishes, AI advice</li>
-            <li>Responsive dark UI built from a written design brief; deployed as three separate services</li>
-          </ul>
-          <h4 data-i18n="hard_h">Problems I solved</h4>
-          <ul data-i18n="p1_hard">
-            <li>The AI refused unclear photos, so I rewrote the prompt to give a best-effort estimate with a confidence level and a note</li>
-            <li>Entries near midnight landed on the wrong day, so day boundaries now use the user's timezone</li>
-            <li>Raw API errors leaked to users, so they are mapped to short readable messages</li>
-          </ul>
-          <p class="note" data-i18n="p1_note">Free hosting: the first request after a pause can take 30–50 seconds while the server wakes up.</p>
-          <p class="links">
-            <a class="btn primary" href="https://kbju-tracker.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
-            <a class="btn ghost" href="https://github.com/Myrrzec/kbju-tracker" target="_blank" rel="noopener" data-i18n="code">Source code</a>
-          </p>
-        </div>
-      </article>
-
-      <article class="project">
-        <div class="shot shot-pilates" aria-hidden="true">
-          <div class="p-nav"><i></i><i></i><i></i></div>
-          <div class="p-hero"><span></span><span></span><b></b></div>
-        </div>
-        <div class="body">
-          <h3>First Pilates Studio, concept <small data-i18n="p2_kind">Concept redesign · Bilingual site</small></h3>
-          <p class="chips"><span>HTML · CSS · JavaScript</span><span>RU / EN toggle</span><span>Cloudflare Pages</span><span>GitHub</span></p>
-          <p data-i18n="p2_sum">An unofficial concept redesign of a real pilates studio's website in Almaty: a photo-led single page with a RU/EN language toggle, programs, pricing and WhatsApp booking links. Not affiliated with the studio and clearly labeled as such.</p>
-          <h4 data-i18n="built_h">What I built</h4>
-          <ul data-i18n="p2_built">
-            <li>A single-page site, Russian by default with an English toggle that also translates image descriptions, links and the page description</li>
-            <li>Program tabs, pricing, an instructor-training section, a contact block and a custom 404</li>
-            <li>Responsive, photo-led layout with a mobile menu</li>
-            <li>Every push to GitHub redeploys the site automatically</li>
-          </ul>
-          <h4 data-i18n="hard_h">Problems I solved</h4>
-          <ul data-i18n="p2_hard">
-            <li>The page shows a real business, so it carries a visible "unofficial concept" banner, is kept out of search (noindex) and has no structured data that could pass it off as the official site</li>
-            <li>Keeping one page fully bilingual without duplicating markup: one set of elements, two languages</li>
-          </ul>
-          <p class="note" data-i18n="p2_note">Photos and contact details belong to the studio and are shown only as a design concept. An earlier version of this repository was a fictional studio site with full technical SEO; see the commit history.</p>
-          <p class="links">
-            <a class="btn primary" href="https://evergreen-pilates-site.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
-            <a class="btn ghost" href="https://github.com/Myrrzec/evergreen-pilates-site" target="_blank" rel="noopener" data-i18n="code">Source code</a>
-          </p>
-        </div>
-      </article>
+  <section class="panel paper work" id="work">
+    <div class="work__head">
+      <h2 class="mega" data-i18n="work_h2">Selected<br>Work</h2>
+      <p class="serif work__sub" data-i18n="work_sub">An interactive walkthrough and a full-stack app. Both live, both with source code.</p>
     </div>
-  </section>
 
-  <section id="how" class="alt">
-    <div class="wrap">
-      <h2 data-i18n="how_h2">How I work</h2>
-      <p class="sub" data-i18n="how_sub">A repeatable process, so you know what to expect.</p>
-      <ol class="steps">
-        <li><b data-i18n="s1_t">1. Clarify</b><span data-i18n="s1_d">We agree on the goal, the pages or features, and what "done" means before any code.</span></li>
-        <li><b data-i18n="s2_t">2. Build with AI</b><span data-i18n="s2_d">I work with Claude Code in small steps and review what it writes instead of accepting it blindly.</span></li>
-        <li><b data-i18n="s3_t">3. Test for real</b><span data-i18n="s3_d">I click through it in a browser, on desktop and mobile, and fix what breaks.</span></li>
-        <li><b data-i18n="s4_t">4. Ship and explain</b><span data-i18n="s4_d">Code goes to your GitHub, the site goes live, and you get a short handover: what is where and how to change it.</span></li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="skills">
-    <div class="wrap">
-      <h2 data-i18n="skills_h2">Skills and tools</h2>
-      <div class="grid3">
-        <div>
-          <h4 data-i18n="sk1_h">Build</h4>
-          <p class="chips"><span>Python</span><span>FastAPI</span><span>TypeScript</span><span>React</span><span>Tailwind CSS</span><span>HTML/CSS/JS</span><span>Vite</span></p>
+    <article class="project">
+      <div class="cover cover-navy" aria-hidden="true">
+        <div class="phone phone-a">
+          <svg class="scr-map" viewBox="0 0 200 420" preserveAspectRatio="xMidYMid slice">
+            <rect width="200" height="420" fill="#dfe9d3" />
+            <path d="M-10 300 C 60 280 110 270 200 250" stroke="#fbf8f0" stroke-width="8" fill="none" />
+            <path d="M40 -10 C 50 100 70 170 100 210" stroke="#fbf8f0" stroke-width="8" fill="none" />
+            <path d="M70 230 C 90 210 130 214 150 228 C 172 244 166 276 140 286 C 112 296 76 288 68 270 C 62 256 62 240 70 230Z" fill="#8fc3dd" />
+            <path d="M30 120 C 50 70 110 56 160 70 L156 82 C 110 70 60 82 42 128Z" fill="#f4efe3" stroke="#b7ad98" />
+            <circle cx="104" cy="150" r="20" fill="#f4efe3" stroke="#b7ad98" />
+            <g fill="#8fb87a"><circle cx="20" cy="40" r="7" /><circle cx="170" cy="130" r="8" /><circle cx="30" cy="200" r="6" /><circle cx="180" cy="320" r="7" /><circle cx="60" cy="350" r="8" /></g>
+            <circle cx="104" cy="150" r="16" fill="#d4a72c" opacity=".35" />
+            <circle cx="104" cy="150" r="9" fill="#d4a72c" stroke="#fff" stroke-width="2" />
+            <circle cx="60" cy="100" r="8" fill="#0d1b2e" stroke="#fff" stroke-width="2" />
+            <circle cx="150" cy="96" r="8" fill="#0d1b2e" stroke="#fff" stroke-width="2" />
+            <circle cx="116" cy="254" r="8" fill="#0d1b2e" stroke="#fff" stroke-width="2" />
+            <rect x="10" y="300" width="180" height="120" rx="14" fill="#f7f4ec" />
+            <rect x="24" y="318" width="40" height="5" rx="2.5" fill="#d4a72c" />
+            <rect x="24" y="330" width="110" height="10" rx="5" fill="#1b2433" />
+            <rect x="24" y="348" width="150" height="5" rx="2.5" fill="#c9c4b6" />
+            <rect x="24" y="358" width="130" height="5" rx="2.5" fill="#c9c4b6" />
+            <rect x="24" y="378" width="152" height="22" rx="11" fill="#d4a72c" />
+          </svg>
         </div>
-        <div>
-          <h4 data-i18n="sk2_h">Data and AI</h4>
-          <p class="chips"><span>PostgreSQL</span><span>SQLAlchemy</span><span>Alembic</span><span>JWT auth</span><span>Claude API</span><span>Prompt design</span></p>
-        </div>
-        <div>
-          <h4 data-i18n="sk3_h">Ship</h4>
-          <p class="chips"><span>Git · GitHub</span><span>Cloudflare Pages</span><span>Render</span><span>DNS basics</span><span>Technical SEO</span></p>
+        <div class="phone phone-b">
+          <svg class="scr-map" viewBox="0 0 200 420" preserveAspectRatio="xMidYMid slice">
+            <defs><linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1530" /><stop offset="1" stop-color="#2b3a66" /></linearGradient></defs>
+            <rect width="200" height="420" fill="url(#nsky)" />
+            <g fill="#fff"><circle cx="30" cy="60" r="1.2" /><circle cx="90" cy="40" r="1.6" /><circle cx="160" cy="80" r="1.2" /><circle cx="130" cy="30" r="1" /><circle cx="60" cy="110" r="1" /></g>
+            <circle cx="160" cy="54" r="14" fill="#e8ecf5" />
+            <rect y="270" width="200" height="150" fill="#2c4632" />
+            <path d="M-10 170 Q100 120 210 170 L210 182 Q100 134 -10 182Z" fill="#4c556b" />
+            <rect x="20" y="182" width="160" height="88" fill="#6c7287" />
+            <g fill="#ffd76e"><rect x="30" y="196" width="14" height="10" /><rect x="52" y="196" width="14" height="10" /><rect x="74" y="196" width="14" height="10" /><rect x="96" y="196" width="14" height="10" /><rect x="118" y="196" width="14" height="10" /><rect x="140" y="196" width="14" height="10" /><rect x="162" y="196" width="10" height="10" /><rect x="30" y="220" width="14" height="10" /><rect x="52" y="220" width="14" height="10" /><rect x="74" y="220" width="14" height="10" /><rect x="96" y="220" width="14" height="10" /><rect x="118" y="220" width="14" height="10" /><rect x="140" y="220" width="14" height="10" /><rect x="162" y="220" width="10" height="10" /></g>
+            <path d="M60 420 L92 270 H108 L140 420Z" fill="#6b3d33" />
+            <circle cx="100" cy="160" r="10" fill="#f0c75a" opacity=".35" /><circle cx="100" cy="160" r="5" fill="#f0c75a" stroke="#fff" stroke-width="1.5" />
+            <rect x="40" y="250" width="120" height="44" rx="8" fill="#f7f4ec" />
+            <rect x="50" y="260" width="50" height="7" rx="3.5" fill="#1b2433" />
+            <rect x="50" y="274" width="96" height="4" rx="2" fill="#c9c4b6" />
+            <rect x="120" y="380" width="66" height="20" rx="10" fill="rgba(0,0,0,.45)" /><rect x="153" y="383" width="30" height="14" rx="7" fill="#fff" />
+          </svg>
         </div>
       </div>
+      <div class="info">
+        <p class="kicker"><span class="num">01</span><span class="serif" data-i18n="u_kind">Interactive web walkthrough</span></p>
+        <h3>Explore UTP</h3>
+        <p class="chips"><span>HTML · CSS · JavaScript</span><span>SVG</span><span>Video-ready</span><span>Mobile</span></p>
+        <p class="sum" data-i18n="u_sum">A point-and-click walkthrough of my own university campus, Universiti Teknologi PETRONAS. You click a place on an illustrated map, read about it, then step inside a full-screen virtual view and explore it by tapping points of interest.</p>
+        <h4 data-i18n="built_h">What I built</h4>
+        <ul class="rows" data-i18n="u_built">
+          <li>An illustrated campus map with numbered places; clicking one zooms the map smoothly and opens a description panel, with Previous / Next for a guided tour</li>
+          <li>An "Experience it virtually" mode: a full-screen view with clickable points that reveal details, and a day / night switch that changes the whole scene</li>
+          <li>Every place plays a video clip when one is added; until then an illustrated scene stands in, so the experience never shows a broken player</li>
+          <li>Shareable links to any place or straight into its virtual view, so a main website can link to a specific stop</li>
+        </ul>
+        <h4 data-i18n="hard_h">Problems I solved</h4>
+        <ul class="rows" data-i18n="u_hard">
+          <li>On phones the wide scene is cropped, so clickable points drifted off their objects; the scene, video and points now share one frame, and you drag sideways to look around</li>
+          <li>The location panel covered the place it described, so the map zoom shifts each place clear of the panel on desktop and above the bottom sheet on mobile</li>
+        </ul>
+        <p class="note" data-i18n="u_note">A student concept, not an official UTP website. Plain HTML, CSS and JavaScript with no build step.</p>
+        <p class="links">
+          <a class="btn btn-live" href="https://utp-campus-tour.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
+          <a class="btn btn-code" href="https://github.com/Myrrzec/utp-campus-tour" target="_blank" rel="noopener" data-i18n="code">Source code</a>
+        </p>
+      </div>
+    </article>
 
-      <div class="fit">
-        <div>
-          <h4 data-i18n="fit_yes_h">Good fit</h4>
-          <ul data-i18n="fit_yes">
-            <li>Landing pages and small business websites</li>
-            <li>Launching a finished static site: hosting, HTTPS, sitemap, checks</li>
-            <li>Small full-stack apps: accounts, database, dashboards</li>
-            <li>Adding an AI feature, such as photo or text analysis</li>
-          </ul>
+    <article class="project flip">
+      <div class="cover cover-green" aria-hidden="true">
+        <div class="phone phone-a">
+          <div class="scr scr-tracker">
+            <div class="top"><i></i><i></i></div>
+            <div class="ring"><b>2560</b><i>/ 3480 kcal</i></div>
+            <div class="bars"><span style="--w:100%;--c:#c8ff4d"></span><span style="--w:100%;--c:#ff9a4d"></span><span style="--w:31%;--c:#b79cff"></span></div>
+            <div class="cards"><div style="--c:#c8ff4d"></div><div style="--c:#ff9a4d"></div></div>
+          </div>
         </div>
-        <div>
-          <h4 data-i18n="fit_no_h">Not yet</h4>
-          <ul data-i18n="fit_no">
-            <li>WordPress and page-builder work</li>
-            <li>Large or legacy codebases</li>
-            <li>Handling sensitive or regulated data</li>
-          </ul>
+        <div class="phone phone-b">
+          <div class="scr scr-diary">
+            <div class="top"><i></i><i></i></div>
+            <div class="meal" style="--a:#e8a24a;--b:#7a3b12"><span class="ph"></span><span class="ln"><i></i><i></i></span></div>
+            <div class="meal" style="--a:#9ad06a;--b:#2f5a1d"><span class="ph"></span><span class="ln"><i></i><i></i></span></div>
+            <div class="meal" style="--a:#f0d6a0;--b:#a4662a"><span class="ph"></span><span class="ln"><i></i><i></i></span></div>
+            <div class="meal" style="--a:#d9694a;--b:#5a1a10"><span class="ph"></span><span class="ln"><i></i><i></i></span></div>
+            <div class="meal" style="--a:#8ac7d6;--b:#1d4a5a"><span class="ph"></span><span class="ln"><i></i><i></i></span></div>
+          </div>
         </div>
       </div>
+      <div class="info">
+        <p class="kicker"><span class="num">02</span><span class="serif" data-i18n="p1_kind">Full-stack app</span></p>
+        <h3>KBJU Tracker</h3>
+        <p class="chips"><span>Python · FastAPI</span><span>PostgreSQL</span><span>React · TypeScript</span><span>Tailwind</span><span>Claude API</span></p>
+        <p class="sum" data-i18n="p1_sum">A calorie and macro tracker. You photograph a meal and AI estimates calories, protein, fat and carbs, which you can correct before saving to a daily diary.</p>
+        <h4 data-i18n="built_h">What I built</h4>
+        <ul class="rows" data-i18n="p1_built">
+          <li>Sign-up and login with JWT tokens, user profile and daily targets from the Mifflin-St Jeor formula</li>
+          <li>Food-photo recognition with Claude Vision, returning structured JSON through tool use</li>
+          <li>Diary with meals grouped by photo or time (Lunch 1, Lunch 2), inline editing, recent dishes, AI advice</li>
+          <li>Responsive dark UI built from a written design brief; deployed as three separate services</li>
+        </ul>
+        <h4 data-i18n="hard_h">Problems I solved</h4>
+        <ul class="rows" data-i18n="p1_hard">
+          <li>The AI refused unclear photos, so I rewrote the prompt to give a best-effort estimate with a confidence level and a note</li>
+          <li>Entries near midnight landed on the wrong day, so day boundaries now use the user's timezone</li>
+          <li>Raw API errors leaked to users, so they are mapped to short readable messages</li>
+        </ul>
+        <p class="note" data-i18n="p1_note">Free hosting: the first request after a pause can take 30–50 seconds while the server wakes up.</p>
+        <p class="links">
+          <a class="btn btn-live" href="https://kbju-tracker.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
+          <a class="btn btn-code" href="https://github.com/Myrrzec/kbju-tracker" target="_blank" rel="noopener" data-i18n="code">Source code</a>
+        </p>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="panel night about" id="about">
+    <h2 class="mega" data-i18n="about_h2">About</h2>
+
+    <div class="split">
+      <span class="label" data-i18n="about_label">Intro</span>
+      <p class="about__text" data-i18n="about_text">I'm Make, a web developer. I build full-stack applications and websites: interface, server, database and deployment. Every project starts from a clear brief and ends with a live URL and source code on GitHub.</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th data-i18n="tbl_area">Area</th><th data-i18n="tbl_tools">Tools</th><th data-i18n="tbl_use">Used for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td data-i18n="t1_a">Interface</td><td>React · TypeScript · Tailwind CSS · HTML/CSS/JS · Vite</td><td data-i18n="t1_u">Responsive UI from a written brief</td></tr>
+        <tr><td data-i18n="t2_a">Server</td><td>Python · FastAPI · JWT auth</td><td data-i18n="t2_u">APIs and authentication</td></tr>
+        <tr><td data-i18n="t3_a">Data</td><td>PostgreSQL · SQLAlchemy · Alembic</td><td data-i18n="t3_u">Schemas and migrations</td></tr>
+        <tr><td data-i18n="t4_a">AI features</td><td>Claude API · Prompt design</td><td data-i18n="t4_u">Photo and text analysis</td></tr>
+        <tr><td data-i18n="t5_a">Launch</td><td>Git · GitHub · Cloudflare Pages · Render · DNS · Technical SEO</td><td data-i18n="t5_u">Hosting, HTTPS, deploys</td></tr>
+      </tbody>
+    </table>
+
+    <div class="split">
+      <span class="label" data-i18n="services_label">Services</span>
+      <ul class="rows big" data-i18n="services_list">
+        <li>Interactive web presentations and walkthroughs: maps, hotspots, embedded video</li>
+        <li>Landing pages and small business websites</li>
+        <li>Launching a finished site: hosting, HTTPS, sitemap, checks</li>
+        <li>Small full-stack apps: accounts, database, dashboards</li>
+        <li>Photo and text analysis features for existing apps</li>
+      </ul>
     </div>
   </section>
 
-  <section id="contact" class="alt">
-    <div class="wrap center">
-      <h2 data-i18n="contact_h2">Let's build something</h2>
-      <p class="sub" data-i18n="contact_sub">The fastest way to see how I work is the code and the live projects above.</p>
-      <p class="links center">
-        <a class="btn primary" href="https://github.com/Myrrzec" target="_blank" rel="noopener">GitHub · Myrrzec</a>
-        <!-- Add the Upwork profile link here once the profile is live. -->
-      </p>
+  <section class="panel blue contact" id="contact">
+    <div class="ticket">
+      <div class="ticket__in">
+        <h2 class="serif" data-i18n="contact_h2">Let's build something</h2>
+        <p data-i18n="contact_sub">Full-stack apps, websites and launch. Live projects and source code are above.</p>
+        <a class="btn btn-ink" href="https://github.com/Myrrzec" target="_blank" rel="noopener">GitHub · Myrrzec</a>
+      </div>
     </div>
   </section>
 
 </main>
 
-<footer>
-  <div class="wrap foot">
-    <span>© 2026 Make</span>
-    <span data-i18n="foot">Built with AI and shipped on GitHub Pages.</span>
+<footer class="panel void foot">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <div class="marquee__group"><span>Make</span><span data-i18n="marquee">Web developer</span><span>Make</span><span data-i18n="marquee">Web developer</span></div>
+      <div class="marquee__group"><span>Make</span><span data-i18n="marquee">Web developer</span><span>Make</span><span data-i18n="marquee">Web developer</span></div>
+    </div>
+  </div>
+  <div class="foot__body">
+    <p class="wordmark">Make</p>
+    <div class="foot__cols">
+      <div>
+        <h4 data-i18n="foot_links">Links</h4>
+        <a href="#work" data-i18n="nav_work">Work</a>
+        <a href="#about" data-i18n="nav_about">About</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+      </div>
+      <div>
+        <h4 data-i18n="foot_connect">Connect</h4>
+        <a href="https://github.com/Myrrzec" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <p class="foot__copy">© 2026 Make<br><span data-i18n="foot_tag">Full-stack apps and websites, taken live.</span></p>
+    </div>
   </div>
 </footer>
 
