@@ -45,6 +45,7 @@ const RU = {
   foot_connect: "Связь",
   foot_tag: "Full-stack приложения и сайты, доведённые до запуска.",
   marquee: "Веб-разработчик",
+  skip: "Перейти к содержанию",
 };
 
 const TITLES = {
@@ -86,3 +87,188 @@ try {
   saved = localStorage.getItem("lang") || "en";
 } catch {}
 if (saved === "ru") setLang("ru");
+
+/* ---------- motion ---------- */
+
+const root = document.documentElement;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+// start the hero intro once fonts are in (or after a short cap), so nothing jumps mid-animation
+Promise.race([document.fonts ? document.fonts.ready : null, new Promise((r) => setTimeout(r, 700))]).then(() =>
+  requestAnimationFrame(() => root.classList.add("is-ready"))
+);
+
+// tag elements for scroll reveal; stagger siblings with --d
+function tag(selector, kind = "", step = 0.08) {
+  document.querySelectorAll(selector).forEach((el, i) => {
+    el.dataset.reveal = kind;
+    if (step) el.style.setProperty("--d", `${Math.min(i, 8) * step}s`);
+  });
+}
+tag(".mega, .wordmark", "mask", 0);
+tag(".work__sub", "", 0);
+tag(".cover", "cover", 0);
+document.querySelectorAll(".info").forEach((info) => {
+  [...info.children].forEach((el, i) => {
+    el.dataset.reveal = "";
+    el.style.setProperty("--d", `${Math.min(i, 8) * 0.07}s`);
+  });
+});
+tag(".split > *", "", 0.1);
+tag(".tbl", "", 0);
+tag(".ticket", "", 0);
+tag(".foot__cols > *", "", 0.1);
+
+const revealed = document.querySelectorAll("[data-reveal]");
+if (reduce || !("IntersectionObserver" in window)) {
+  revealed.forEach((el) => el.classList.add("is-in", "is-settled"));
+} else {
+  const show = (el) => {
+    el.classList.add("is-in");
+    setTimeout(() => el.classList.add("is-settled"), 1600);
+    if (el.classList.contains("cover")) countUp(el.querySelector(".ring b"));
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        show(e.target);
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  );
+  // a fully clipped element never reports an intersection, so masked text watches its parent
+  const masks = new Map();
+  const mo = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        mo.unobserve(e.target);
+        show(masks.get(e.target));
+      });
+    },
+    { rootMargin: "0px 0px -15% 0px" }
+  );
+  revealed.forEach((el) => {
+    if (el.dataset.reveal === "mask") {
+      masks.set(el.parentElement, el);
+      mo.observe(el.parentElement);
+    } else io.observe(el);
+  });
+}
+
+// idle animations in the covers only run while visible
+const covers = document.querySelectorAll(".cover");
+if (!reduce && "IntersectionObserver" in window) {
+  const live = new IntersectionObserver((entries) =>
+    entries.forEach((e) => e.target.classList.toggle("is-live", e.isIntersecting))
+  );
+  covers.forEach((c) => live.observe(c));
+}
+
+function countUp(el) {
+  if (!el || el.dataset.counted) return;
+  el.dataset.counted = "1";
+  const target = parseInt(el.textContent, 10);
+  const start = performance.now() + 600;
+  const dur = 1800;
+  const step = (now) => {
+    const t = Math.min(Math.max((now - start) / dur, 0), 1);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - t, 4)));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  el.textContent = "0";
+  requestAnimationFrame(step);
+}
+
+// pointer depth: phones drift apart, light follows the cursor
+if (finePointer && !reduce) {
+  covers.forEach((cover) => {
+    cover.addEventListener("pointermove", (e) => {
+      const r = cover.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      cover.style.setProperty("--mx", (x - 0.5).toFixed(3));
+      cover.style.setProperty("--my", (y - 0.5).toFixed(3));
+      cover.style.setProperty("--lx", `${(x * 100).toFixed(1)}%`);
+      cover.style.setProperty("--ly", `${(y * 100).toFixed(1)}%`);
+    });
+    cover.addEventListener("pointerleave", () => {
+      cover.style.setProperty("--mx", 0);
+      cover.style.setProperty("--my", 0);
+    });
+  });
+  const about = document.querySelector(".about");
+  about.addEventListener("pointermove", (e) => {
+    const r = about.getBoundingClientRect();
+    about.style.setProperty("--x", `${e.clientX - r.left}px`);
+    about.style.setProperty("--y", `${e.clientY - r.top}px`);
+  });
+}
+
+// current section in the nav
+const pills = [...document.querySelectorAll(".pills a")];
+if ("IntersectionObserver" in window) {
+  const spy = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        pills.forEach((p) => p.setAttribute("aria-current", String(p.hash === `#${e.target.id}`)));
+      }),
+    { rootMargin: "-45% 0px -50% 0px" }
+  );
+  document.querySelectorAll("#top, #work, #about, #contact").forEach((s) => spy.observe(s));
+}
+
+// one scroll loop: hero parallax, nav hide/show, marquee speed
+const nav = document.querySelector(".nav");
+const hero = document.querySelector(".hero");
+const heroBg = hero.querySelector(".hero__bg");
+const heroCopy = hero.querySelector(".hero__copy");
+const heroTitle = hero.querySelector(".hero__title");
+const marquee = document.querySelector(".marquee__track");
+let lastY = scrollY;
+let velocity = 0;
+let ticking = false;
+
+function onFrame() {
+  ticking = false;
+  const y = scrollY;
+  const dy = y - lastY;
+  lastY = y;
+
+  if (Math.abs(dy) > 4) nav.classList.toggle("is-hidden", dy > 0 && y > innerHeight * 0.6);
+  if (y < 40) nav.classList.remove("is-hidden");
+
+  if (reduce) return;
+  const h = hero.offsetHeight;
+  if (y < h) {
+    heroBg.style.translate = `0 ${(y * 0.35).toFixed(1)}px`;
+    heroCopy.style.translate = `0 ${(y * -0.12).toFixed(1)}px`;
+    heroCopy.style.opacity = Math.max(1 - y / (h * 0.55), 0).toFixed(3);
+    heroTitle.style.translate = `0 ${(y * 0.18).toFixed(1)}px`;
+  }
+  velocity = Math.max(-6, Math.min(6, velocity + dy * 0.04));
+}
+addEventListener(
+  "scroll",
+  () => {
+    if (!ticking) requestAnimationFrame(onFrame);
+    ticking = true;
+  },
+  { passive: true }
+);
+
+// marquee speeds up with scroll and runs backwards when scrolling up, then eases back
+const slide = !reduce && marquee.getAnimations ? marquee.getAnimations()[0] : null;
+if (slide) {
+  let dir = 1;
+  (function loop() {
+    if (Math.abs(velocity) > 0.05) dir = Math.sign(velocity);
+    velocity *= 0.92;
+    slide.playbackRate = dir * (1 + Math.abs(velocity));
+    requestAnimationFrame(loop);
+  })();
+}
