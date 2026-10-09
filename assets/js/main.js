@@ -13,14 +13,14 @@ const RU = {
   p1_built: "<li>Регистрация и вход на JWT-токенах, профиль и суточные нормы по формуле Миффлина-Сан Жеора</li><li>Распознавание еды по фото через Claude Vision, ответ строго в виде структурированного JSON (tool use)</li><li>Дневник с группировкой приёмов пищи по фото или времени (Обед 1, Обед 2), правка записей, недавние блюда, советы ИИ</li><li>Адаптивный тёмный интерфейс по написанному дизайн-брифу; развёрнут как три отдельных сервиса</li>",
   hard_h: "Какие проблемы решил",
   p1_hard: "<li>ИИ отказывался от нечётких фото, поэтому я переписал промпт: теперь он даёт примерную оценку с уровнем уверенности и пояснением</li><li>Записи около полуночи попадали не в тот день, теперь границы суток считаются по часовому поясу пользователя</li><li>Пользователю показывались сырые ошибки API, теперь они заменены короткими понятными сообщениями</li>",
-  p1_note: "Бесплатный хостинг: первый запрос после паузы может занять 30–50 секунд, пока сервер просыпается.",
+  p1_note: "Бесплатный хостинг: первый запрос после паузы может занять 30-50 секунд, пока сервер просыпается.",
   live: "Смотреть демо",
   code: "Исходный код",
   u_kind: "Интерактивная веб-презентация",
   u_sum: "Интерактивная прогулка по вымышленному приморскому городку. Выбираете место на иллюстрированной карте, читаете его историю, затем входите в полноэкранную сцену и кликаете по объектам, чтобы что-то произошло.",
   u_built: "<li>Иллюстрированная карта города с пятью местами: клик плавно приближает карту и открывает описание, кнопки «Назад / Далее» ведут по маршруту</li><li>Полноэкранные сцены, которые меняются от кликов: лодка уходит в море, луч маяка обходит залив, открываются прилавки рынка, всплывает кит, распахиваются двери музея</li><li>Переключатель день / ночь для каждой сцены и место под настоящее видео для каждой точки; если ролика нет, показывается иллюстрация, а не сломанный плеер</li><li>Ссылки на любое место или сразу в его сцену, чтобы основной сайт мог открыть нужную точку в отдельном окне</li>",
   u_hard: "<li>На телефоне широкая сцена обрезается, и точки съезжали со своих объектов; теперь сцена, видео и точки в одном кадре, каждая сцена открывается на главном объекте, а осмотреться можно, потянув её в сторону</li><li>Ночной режим должен затемнять сцену, но оставлять яркими окна, фонари и луч маяка, поэтому графика разделена на базовый слой под затемнением и слой свечения поверх него</li>",
-  u_note: "Saltmere — вымышленный город. Чистые HTML, CSS и JavaScript без сборки.",
+  u_note: "Saltmere: вымышленный город. Чистые HTML, CSS и JavaScript без сборки.",
   about_h2: "Обо мне",
   about_label: "Кратко",
   about_text: "Я Make, веб-разработчик. Делаю full-stack приложения и сайты: интерфейс, сервер, база данных и деплой. Каждый проект начинается с понятной задачи и заканчивается рабочей ссылкой и исходным кодом на GitHub.",
@@ -49,8 +49,8 @@ const RU = {
 };
 
 const TITLES = {
-  en: "Make — Web Developer",
-  ru: "Make — Веб-разработчик",
+  en: "Make - Web Developer",
+  ru: "Make - Веб-разработчик",
 };
 
 const DESCS = {
@@ -92,7 +92,6 @@ if (saved === "ru") setLang("ru");
 
 const root = document.documentElement;
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 // start the hero intro once fonts are in (or after a short cap), so nothing jumps mid-animation
 Promise.race([document.fonts ? document.fonts.ready : null, new Promise((r) => setTimeout(r, 700))]).then(() =>
@@ -183,31 +182,6 @@ function countUp(el) {
   requestAnimationFrame(step);
 }
 
-// pointer depth: phones drift apart, light follows the cursor
-if (finePointer && !reduce) {
-  covers.forEach((cover) => {
-    cover.addEventListener("pointermove", (e) => {
-      const r = cover.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width;
-      const y = (e.clientY - r.top) / r.height;
-      cover.style.setProperty("--mx", (x - 0.5).toFixed(3));
-      cover.style.setProperty("--my", (y - 0.5).toFixed(3));
-      cover.style.setProperty("--lx", `${(x * 100).toFixed(1)}%`);
-      cover.style.setProperty("--ly", `${(y * 100).toFixed(1)}%`);
-    });
-    cover.addEventListener("pointerleave", () => {
-      cover.style.setProperty("--mx", 0);
-      cover.style.setProperty("--my", 0);
-    });
-  });
-  const about = document.querySelector(".about");
-  about.addEventListener("pointermove", (e) => {
-    const r = about.getBoundingClientRect();
-    about.style.setProperty("--x", `${e.clientX - r.left}px`);
-    about.style.setProperty("--y", `${e.clientY - r.top}px`);
-  });
-}
-
 // current section in the nav
 const pills = [...document.querySelectorAll(".pills a")];
 if ("IntersectionObserver" in window) {
@@ -222,15 +196,9 @@ if ("IntersectionObserver" in window) {
   document.querySelectorAll("#top, #work, #about, #contact").forEach((s) => spy.observe(s));
 }
 
-// one scroll loop: hero parallax, nav hide/show, marquee speed
+// hide the nav while scrolling down, show it again on the way up
 const nav = document.querySelector(".nav");
-const hero = document.querySelector(".hero");
-const heroBg = hero.querySelector(".hero__bg");
-const heroCopy = hero.querySelector(".hero__copy");
-const heroTitle = hero.querySelector(".hero__title");
-const marquee = document.querySelector(".marquee__track");
 let lastY = scrollY;
-let velocity = 0;
 let ticking = false;
 
 function onFrame() {
@@ -241,16 +209,6 @@ function onFrame() {
 
   if (Math.abs(dy) > 4) nav.classList.toggle("is-hidden", dy > 0 && y > innerHeight * 0.6);
   if (y < 40) nav.classList.remove("is-hidden");
-
-  if (reduce) return;
-  const h = hero.offsetHeight;
-  if (y < h) {
-    heroBg.style.translate = `0 ${(y * 0.35).toFixed(1)}px`;
-    heroCopy.style.translate = `0 ${(y * -0.12).toFixed(1)}px`;
-    heroCopy.style.opacity = Math.max(1 - y / (h * 0.55), 0).toFixed(3);
-    heroTitle.style.translate = `0 ${(y * 0.18).toFixed(1)}px`;
-  }
-  velocity = Math.max(-6, Math.min(6, velocity + dy * 0.04));
 }
 addEventListener(
   "scroll",
@@ -260,15 +218,3 @@ addEventListener(
   },
   { passive: true }
 );
-
-// marquee speeds up with scroll and runs backwards when scrolling up, then eases back
-const slide = !reduce && marquee.getAnimations ? marquee.getAnimations()[0] : null;
-if (slide) {
-  let dir = 1;
-  (function loop() {
-    if (Math.abs(velocity) > 0.05) dir = Math.sign(velocity);
-    velocity *= 0.92;
-    slide.playbackRate = dir * (1 + Math.abs(velocity));
-    requestAnimationFrame(loop);
-  })();
-}
