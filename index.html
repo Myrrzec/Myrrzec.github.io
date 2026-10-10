@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Make - Web Developer</title>
-<meta name="description" content="Make is a web developer: full-stack apps and websites, from idea to a live URL. Three live projects with source code." />
+<meta name="description" content="Make, web developer: websites, web apps and interactive presentations, from design to launch." />
 <meta name="theme-color" content="#0a0a0a" />
 <link rel="canonical" href="https://makeworks.dev/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Make - Web Developer" />
-<meta property="og:description" content="Three live projects with source code: an interactive web presentation, a full-stack calorie tracker and a Rubik's Cube solver." />
+<meta property="og:description" content="Websites, web apps and interactive presentations, from design to launch. Three live projects." />
 <meta property="og:url" content="https://makeworks.dev/" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23ff5a00'/%3E%3Ctext x='32' y='45' font-family='Arial Black,Arial,sans-serif' font-weight='900' font-size='34' text-anchor='middle' fill='%23141414'%3EM%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,7 +52,7 @@
     </div>
     <div class="hero__copy">
       <p class="hello serif" data-i18n="hero_hello">Hi, I'm Make.</p>
-      <p class="lead" data-i18n="hero_lead">I build interactive web experiences and full-stack apps, from the first click to a live URL.</p>
+      <p class="lead" data-i18n="hero_lead">I design and build websites, web apps and interactive presentations, from the first sketch to launch.</p>
     </div>
     <h1 class="hero__title" data-i18n="hero_h1"><span>Web</span> <span>Developer</span></h1>
   </section>
@@ -60,7 +60,7 @@
   <section class="panel paper work" id="work">
     <div class="work__head">
       <h2 class="mega" data-i18n="work_h2">Selected<br>Work</h2>
-      <p class="serif work__sub" data-i18n="work_sub">An interactive web presentation, a full-stack app and a 3D puzzle solver. All live, all with source code.</p>
+      <p class="serif work__sub" data-i18n="work_sub">Three projects from different fields: an interactive presentation, a full-stack web app and a computer vision app. All of them are live.</p>
     </div>
 
     <article class="project">
@@ -111,20 +111,14 @@
         <p class="kicker"><span class="num">01</span><span class="serif" data-i18n="u_kind">Interactive web presentation</span></p>
         <h3>Saltmere</h3>
         <p class="chips"><span>HTML · CSS · JavaScript</span><span>SVG animation</span><span>Video-ready</span><span>Mobile</span></p>
-        <p class="sum" data-i18n="u_sum">A point-and-click walkthrough of a fictional seaside town. You pick a place on an illustrated map, read its story, then step inside a full-screen scene and click things to make them happen.</p>
-        <h4 data-i18n="built_h">What I built</h4>
+        <p class="sum" data-i18n="u_sum">An interactive presentation of a seaside town. Visitors explore an illustrated map, open each location and step into full-screen scenes that respond to every click.</p>
+        <h4 data-i18n="built_h">Key features</h4>
         <ul class="rows" data-i18n="u_built">
-          <li>An illustrated town map with five places; clicking one zooms the map smoothly and opens its description, with Previous / Next for a guided tour</li>
-          <li>Full-screen scenes where clicks change what you see: a boat sails out, the lighthouse beam sweeps the bay, market stalls open, a whale surfaces, museum doors swing open</li>
-          <li>A day / night switch for every scene, and a slot for a real video clip per place, with the illustration as a fallback so a missing clip never shows a broken player</li>
-          <li>Links to any place or straight into its scene, so a main website can open a specific stop in its own window</li>
+          <li>Animated map with a guided tour across five locations</li>
+          <li>Clickable scenes with day and night modes and a video slot for every location</li>
+          <li>Direct links to any location, ready to embed in an existing website</li>
         </ul>
-        <h4 data-i18n="hard_h">Problems I solved</h4>
-        <ul class="rows" data-i18n="u_hard">
-          <li>On phones the wide scene is cropped, so clickable points drifted off their objects; the scene, video and points now share one frame, each scene opens on its main subject, and you drag sideways to look around</li>
-          <li>Night mode had to dim the scene but keep windows, lanterns and the lighthouse beam bright, so the art is split into a base layer under a darkening veil and a glow layer above it</li>
-        </ul>
-        <p class="note" data-i18n="u_note">Saltmere is a fictional town. Plain HTML, CSS and JavaScript with no build step.</p>
+        <p class="note" data-i18n="u_note">Saltmere is a concept project. It is built without frameworks, so it runs on any hosting.</p>
         <p class="links">
           <a class="btn btn-live" href="https://saltmere-tour.pages.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
           <a class="btn btn-code" href="https://github.com/Myrrzec/saltmere-tour" target="_blank" rel="noopener" data-i18n="code">Source code</a>
@@ -157,21 +151,14 @@
         <p class="kicker"><span class="num">02</span><span class="serif" data-i18n="p1_kind">Full-stack app</span></p>
         <h3>Macros Tracker</h3>
         <p class="chips"><span>Python · FastAPI</span><span>PostgreSQL</span><span>React · TypeScript</span><span>Tailwind</span><span>Claude API</span></p>
-        <p class="sum" data-i18n="p1_sum">A calorie and macro tracker. You photograph a meal and AI estimates calories, protein, fat and carbs, which you can correct before saving to a daily diary.</p>
-        <h4 data-i18n="built_h">What I built</h4>
+        <p class="sum" data-i18n="p1_sum">A nutrition tracker with photo recognition. Users photograph a meal, get calories and macros in seconds, adjust them and keep a daily diary.</p>
+        <h4 data-i18n="built_h">Key features</h4>
         <ul class="rows" data-i18n="p1_built">
-          <li>Sign-up and login with JWT tokens, user profile and daily targets from the Mifflin-St Jeor formula</li>
-          <li>Food-photo recognition with Claude Vision, returning structured JSON through tool use</li>
-          <li>Diary with meals grouped by photo or time (Lunch 1, Lunch 2), inline editing, recent dishes, AI advice</li>
-          <li>Responsive dark UI built from a written design brief; deployed as three separate services</li>
+          <li>Accounts, personal profiles and daily targets</li>
+          <li>AI photo recognition with a confidence estimate for each dish</li>
+          <li>Meal diary, history and personal recommendations</li>
         </ul>
-        <h4 data-i18n="hard_h">Problems I solved</h4>
-        <ul class="rows" data-i18n="p1_hard">
-          <li>The AI refused unclear photos, so I rewrote the prompt to give a best-effort estimate with a confidence level and a note</li>
-          <li>Entries near midnight landed on the wrong day, so day boundaries now use the user's timezone</li>
-          <li>Raw API errors leaked to users, so they are mapped to short readable messages</li>
-        </ul>
-        <p class="note" data-i18n="p1_note">Free hosting: the first request after a pause can take 30-50 seconds while the server wakes up.</p>
+        <p class="note" data-i18n="p1_note">The demo runs on a free server, so the first load can take up to a minute.</p>
         <p class="links">
           <a class="btn btn-live" href="https://macros.makeworks.dev" target="_blank" rel="noopener" data-i18n="live">Live demo</a>
           <a class="btn btn-code" href="https://github.com/Myrrzec/kbju-tracker" target="_blank" rel="noopener" data-i18n="code">Source code</a>
@@ -268,22 +255,15 @@
         </div>
       </div>
       <div class="info">
-        <p class="kicker"><span class="num">03</span><span class="serif" data-i18n="k_kind">Web app</span></p>
+        <p class="kicker"><span class="num">03</span><span class="serif" data-i18n="k_kind">Web app with computer vision</span></p>
         <h3>Make Solve</h3>
         <p class="chips"><span>React · TypeScript</span><span>Three.js</span><span>Computer vision</span><span>Vitest</span></p>
-        <p class="sum" data-i18n="k_sum">A Rubik's Cube solver. You show the cube to your camera or upload six photos, the app checks that such a cube can exist, then walks you through the solution move by move on a 3D cube, with a beginner method or CFOP.</p>
-        <h4 data-i18n="built_h">What I built</h4>
+        <p class="sum" data-i18n="k_sum">A Rubik's Cube solver. The app reads the cube through the camera, checks that it is valid and guides the user to the solution step by step on an interactive 3D model.</p>
+        <h4 data-i18n="built_h">Key features</h4>
         <ul class="rows" data-i18n="k_built">
-          <li>A camera detector written from scratch: it finds the face in a wide frame, fits a 3x3 grid and reads only those cells, and turns faces shown sideways back on its own</li>
-          <li>Two solvers: a beginner layer-by-layer method and CFOP with an optimal cross, F2L pairs and one-look OLL (57 cases) and PLL (21 cases) with named case cards</li>
-          <li>3D playback forward and back, autoplay with adjustable speed, explanations in words or in notation, a formula reference, light and dark themes</li>
-          <li>A cube check that explains in plain words what is wrong: color counts, impossible pieces, a twisted corner, a flipped edge, parity</li>
-        </ul>
-        <h4 data-i18n="hard_h">Problems I solved</h4>
-        <ul class="rows" data-i18n="k_hard">
-          <li>On stickerless cubes pieces of one color merge into one blob, so every region is read as a block of 1x1 to 3x3 pieces and the piece size that forms the best 3x3 grid wins</li>
-          <li>A square block has no long side to show how it is turned, so the grid is aligned using fourth-order image moments</li>
-          <li>78 last-layer formulas typed from reference sheets could hide typos, so each one is run backwards to build its case, and tests check that all cases differ and none breaks the first two layers</li>
+          <li>Custom camera recognition that runs entirely in the browser</li>
+          <li>Two solving methods with 3D playback, adjustable speed and explanations</li>
+          <li>Clear error messages when a cube cannot be solved</li>
         </ul>
         <p class="note" data-i18n="k_note">The interface is in Russian. Camera video is processed in the browser and never uploaded.</p>
         <p class="links">
@@ -300,7 +280,7 @@
 
     <div class="split">
       <span class="label" data-i18n="about_label">Intro</span>
-      <p class="about__text" data-i18n="about_text">I'm Make, a web developer. I build full-stack applications and websites: interface, server, database and deployment. Every project starts from a clear brief and ends with a live URL and source code on GitHub.</p>
+      <p class="about__text" data-i18n="about_text">I'm Make, a web developer. I take projects from idea to launch: interface design, front end, back end, databases, AI features and deployment. You get a product that works, clean code you own, and clear communication at every stage.</p>
     </div>
 
     <table class="tbl">
@@ -308,7 +288,7 @@
         <tr><th data-i18n="tbl_area">Area</th><th data-i18n="tbl_tools">Tools</th><th data-i18n="tbl_use">Used for</th></tr>
       </thead>
       <tbody>
-        <tr><td data-i18n="t1_a">Interface</td><td>React · TypeScript · Tailwind CSS · HTML/CSS/JS · Vite</td><td data-i18n="t1_u">Responsive UI from a written brief</td></tr>
+        <tr><td data-i18n="t1_a">Interface</td><td>React · TypeScript · Tailwind CSS · HTML/CSS/JS · Vite</td><td data-i18n="t1_u">Interface design and responsive front end</td></tr>
         <tr><td data-i18n="t2_a">Server</td><td>Python · FastAPI · JWT auth</td><td data-i18n="t2_u">APIs and authentication</td></tr>
         <tr><td data-i18n="t3_a">Data</td><td>PostgreSQL · SQLAlchemy · Alembic</td><td data-i18n="t3_u">Schemas and migrations</td></tr>
         <tr><td data-i18n="t4_a">AI features</td><td>Claude API · Prompt design</td><td data-i18n="t4_u">Photo and text analysis</td></tr>
@@ -319,21 +299,29 @@
     <div class="split">
       <span class="label" data-i18n="services_label">Services</span>
       <ul class="rows big" data-i18n="services_list">
-        <li>Interactive web presentations and walkthroughs: maps, hotspots, embedded video</li>
-        <li>Landing pages and small business websites</li>
-        <li>Launching a finished site: hosting, HTTPS, sitemap, checks</li>
-        <li>Small full-stack apps: accounts, database, dashboards</li>
-        <li>Photo and text analysis features for existing apps</li>
-      </ul>
+          <li>Business websites and landing pages</li>
+          <li>Web applications: accounts, dashboards, databases</li>
+          <li>Interactive presentations, maps and product tours</li>
+          <li>Interface design and front-end development</li>
+          <li>AI features: photo and text analysis</li>
+          <li>Launch and support: domain, hosting, updates</li>
+        </ul>
     </div>
   </section>
 
   <section class="panel blue contact" id="contact">
     <div class="ticket">
       <div class="ticket__in">
-        <h2 class="serif" data-i18n="contact_h2">Let's build something</h2>
-        <p data-i18n="contact_sub">Full-stack apps, websites and launch. Live projects and source code are above.</p>
-        <a class="btn btn-ink" href="https://github.com/Myrrzec" target="_blank" rel="noopener">GitHub · Myrrzec</a>
+        <h2 class="serif" data-i18n="contact_h2">Let's discuss your project</h2>
+        <p data-i18n="contact_sub">Describe the task in a few words. I reply within a day.</p>
+        <div class="contact-links">
+          <a class="btn btn-ink" data-contact="upwork" target="_blank" rel="noopener">Upwork</a>
+          <a class="btn btn-ink" data-contact="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn-ink" data-contact="telegram" target="_blank" rel="noopener">Telegram</a>
+          <a class="btn btn-ink" data-contact="email">Email</a>
+          <a class="btn btn-ink" data-contact="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ink" data-contact="github" target="_blank" rel="noopener">GitHub</a>
+        </div>
       </div>
     </div>
   </section>
@@ -358,9 +346,14 @@
       </div>
       <div>
         <h4 data-i18n="foot_connect">Connect</h4>
-        <a href="https://github.com/Myrrzec" target="_blank" rel="noopener">GitHub</a>
+        <a data-contact="upwork" target="_blank" rel="noopener">Upwork</a>
+        <a data-contact="whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+        <a data-contact="telegram" target="_blank" rel="noopener">Telegram</a>
+        <a data-contact="email">Email</a>
+        <a data-contact="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+        <a data-contact="github" target="_blank" rel="noopener">GitHub</a>
       </div>
-      <p class="foot__copy">© 2026 Make<br><span data-i18n="foot_tag">Full-stack apps and websites, taken live.</span></p>
+      <p class="foot__copy">© 2026 Make<br><span data-i18n="foot_tag">Websites and web apps, from design to launch.</span></p>
     </div>
   </div>
 </footer>

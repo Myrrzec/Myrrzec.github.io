@@ -409,6 +409,8 @@ ul { margin: 0; padding: 0; }
 }
 .ticket h2 { font-size: clamp(3rem, 7vw, 5.6rem); line-height: .95; margin-bottom: 20px; }
 .ticket p { max-width: 24em; margin: 0 auto 32px; font-weight: 500; }
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+[data-contact][hidden] { display: none; }
 
 /* footer */
 .foot { margin-top: var(--gap); }
