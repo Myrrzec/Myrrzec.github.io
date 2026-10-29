@@ -1,6 +1,7 @@
 const WORD = "Make";
 const PORTRAIT_SRC = "assets/portrait-dots.webp";
 const HEAD_SHARE = 0.47;
+const PORTRAIT_SIZE = 1 / 1.5; // the portrait (and the cursor ball with it) at two thirds of its fitted size
 const SPHERE_SCALE = 0.24;
 const COLLISION_RESPONSE = 0.32;
 const PENETRATION_FIX = 0.75;
@@ -26,8 +27,6 @@ const stage = track.querySelector(".morph-stage");
 const canvas = document.querySelector("#morph-canvas");
 const ctx = canvas.getContext("2d");
 const profile = document.querySelector(".profile-info");
-const soundToggle = document.querySelector(".sound-toggle");
-const soundLabel = soundToggle.querySelector(".sound-label");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const coarse = matchMedia("(pointer: coarse)").matches;
 
@@ -85,7 +84,7 @@ function wordPoints(step) {
 function silhouettePoints() {
   const mobile = W < 900;
   const maxWidth = mobile ? W * 0.94 : W * 0.56;
-  const scale = Math.min((H * figureHeight) / portrait.h, maxWidth / portrait.w);
+  const scale = Math.min((H * figureHeight) / portrait.h, maxWidth / portrait.w) * PORTRAIT_SIZE;
   const offsetX = portraitCX - portrait.w * scale / 2;
   const offsetY = portraitCY - portrait.h * scale / 2;
   return portrait.dots.map((point) => ({
@@ -111,9 +110,9 @@ function build() {
   cy = H / 2;
   const mobile = W < 900;
   portraitCX = mobile ? W * 0.5 : W * 0.305;
-  portraitCY = mobile ? H * 0.34 : H * 0.58;
+  portraitCY = mobile ? H * 0.32 : H * 0.53;
   figureHeight = mobile ? 0.48 : 0.64;
-  font = `800 ${Math.round(Math.min(W * 0.15, H * 0.21))}px Outfit, sans-serif`;
+  font = `800 ${Math.round(Math.min(W * 0.1, H * 0.14))}px Outfit, sans-serif`;
 
   const to = silhouettePoints();
   const step = Math.max(2, Math.sqrt((wordPoints(4).length * 16) / to.length));
@@ -123,7 +122,7 @@ function build() {
   while (to.length < count) to.push(to[(rand() * to.length) | 0]);
 
   const maxWidth = mobile ? W * 0.94 : W * 0.56;
-  const scale = Math.min((H * figureHeight) / portrait.h, maxWidth / portrait.w);
+  const scale = Math.min((H * figureHeight) / portrait.h, maxWidth / portrait.w) * PORTRAIT_SIZE;
   dot = clamp(portrait.dot * scale, 1, 2.6);
   headWidth = portrait.w * scale * HEAD_SHARE;
   wordLeft = Math.min(...from.map((point) => point.x));
@@ -164,9 +163,7 @@ const pointer = { x: 0, y: 0, vx: 0, vy: 0, active: false };
 // a soft hiss carries the flow, a sparse crackle the first grains breaking off, a dense crackle
 // the pour as the portrait forms. Level, density and brightness follow the morph and its speed
 const SOUND_VOLUME = 0.12;
-let soundEnabled = true;
 let sand = null;
-let sandPlaying = false;
 
 // stereo noise with a fixed loudness; grainsPerSecond 0 gives a smooth pinkish hiss,
 // otherwise the buffer is made of short decaying clicks, one per grain
@@ -239,7 +236,6 @@ function createSand() {
 
 // browsers only start audio after a click, tap or key press
 function unlockSand() {
-  if (!soundEnabled) return;
   if (!sand) sand = createSand();
   if (sand && sand.audioCtx.state === "suspended") sand.audioCtx.resume().catch(() => {});
 }
@@ -252,7 +248,7 @@ function updateSand(amount) {
   // portrait forms, falling quiet as the last grains land
   const build = smooth(0, 0.85, amount);
   const arc = (0.12 + 0.88 * build) * smooth(0, 0.05, amount) * (1 - smooth(0.9, 1, amount));
-  const level = soundEnabled ? arc * motion : 0;
+  const level = arc * motion;
   const now = sand.audioCtx.currentTime;
   // slow attack and release, so the sand swells and settles instead of switching on and off
   sand.master.gain.setTargetAtTime(SOUND_VOLUME * level, now, 0.25);
@@ -262,29 +258,11 @@ function updateSand(amount) {
   sand.dense.gain.setTargetAtTime(0.25 * build + 0.05 * motion, now, 0.25);
   // a darker top end keeps the hiss soft rather than airy and sharp
   sand.tone.frequency.setTargetAtTime(3000 + 2200 * build + 400 * motion, now, 0.25);
-  const playing = level > 0.02;
-  if (playing !== sandPlaying) {
-    sandPlaying = playing;
-    soundToggle.classList.toggle("is-playing", playing);
-  }
 }
-
-function updateSoundControl() {
-  soundToggle.setAttribute("aria-pressed", String(soundEnabled));
-  soundToggle.setAttribute("aria-label", soundEnabled ? "Turn transition sound off" : "Turn transition sound on");
-  soundLabel.textContent = soundEnabled ? "Sound on" : "Sound off";
-}
-
-soundToggle.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-  updateSoundControl();
-  unlockSand();
-});
 
 for (const type of ["pointerdown", "keydown", "touchend", "wheel"]) {
   addEventListener(type, unlockSand, { capture: true, passive: true });
 }
-updateSoundControl();
 
 function trackPointer(event) {
   const rect = canvas.getBoundingClientRect();
@@ -320,17 +298,23 @@ function frame(now) {
   const dt = lastTime ? Math.min((now - lastTime) / 16.667, 2) : 1;
   const dtSeconds = lastTime ? Math.min((now - lastTime) / 1000, 0.033) : 1 / 60;
   lastTime = now;
-  const moving = Math.abs(target - shown) > 0.0005;
-  ctx.globalAlpha = moving ? 0.38 : 1;
-  ctx.fillStyle = BG;
-  ctx.fillRect(0, 0, W, H);
-  ctx.globalAlpha = 1;
-
   const amount = clamp((shown - A0) / (A1 - A0));
   updateSand(amount);
   const wordLift = H * 0.2 * smooth(0.02, 0.68, amount);
-  const front = amount * (1 + 0.27 + FLY);
-  const edgeX = (y) => wordRight - (front * wordSpan - zig(y));
+  // the front starts just past the word's right edge, so the jagged edge can't bite into it before
+  // the scroll begins; ZIG_REACH is the furthest that edge swings either way, in word widths
+  const ZIG_REACH = 0.05;
+  const front = amount * (1 + 0.27 + FLY + ZIG_REACH) - ZIG_REACH;
+  // the solid word is drawn lifted, so its jagged edge is read at the word's own height
+  const edgeX = (y) => wordRight - (front * wordSpan - zig(y + wordLift));
+
+  // light trails while things move, a clean frame when they settle; no trails while the solid
+  // word is still on screen, or it smears into faint copies of itself as it rises
+  const moving = Math.abs(target - shown) > 0.0005;
+  ctx.globalAlpha = moving && front >= 1.1 ? 0.38 : 1;
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = 1;
   if (front < 1.1) {
     ctx.save();
     ctx.beginPath();
@@ -465,8 +449,9 @@ function frame(now) {
       }
     } else {
       particle.ox = undefined;
+      // loose but not yet flying: it shivers where the lifted word is now, not where it started
       x = particle.ax + Math.sin(time * 7 + particle.seed * 5) * 0.8;
-      y = particle.ay + Math.cos(time * 6 + particle.seed * 3) * 0.8;
+      y = particle.ay - wordLift + Math.cos(time * 6 + particle.seed * 3) * 0.8;
     }
     const level = Math.round((1 + (particle.shade - 1) * flight) * 10);
     levels[level].push(x, y, radius * (1 + (particle.size - 1) * flight));
@@ -568,10 +553,6 @@ document.querySelectorAll(".service-dialog").forEach((dialog) => {
   });
 });
 
-document.querySelectorAll("[data-close-and-home]").forEach((link) => {
-  link.addEventListener("click", () => link.closest("dialog")?.close());
-});
-
 Promise.all([document.fonts.load("800 100px Outfit"), loadPortrait()]).then(() => {
   build();
   updateProgress();
@@ -579,3 +560,34 @@ Promise.all([document.fonts.load("800 100px Outfit"), loadPortrait()]).then(() =
   document.body.classList.add("is-ready");
   requestAnimationFrame(frame);
 });
+
+// bottom dock: mark the link of the section in the middle of the screen and slide the pill under it
+const dock = document.querySelector(".bottom-dock");
+const dockIndicator = dock.querySelector(".dock-indicator");
+const dockLinks = [...dock.querySelectorAll("a[data-section]")];
+let dockActive = null;
+
+function placeDockIndicator() {
+  if (!dockActive) return;
+  dockIndicator.style.width = `${dockActive.offsetWidth}px`;
+  dockIndicator.style.transform = `translateX(${dockActive.offsetLeft}px)`;
+}
+
+function updateDock() {
+  const middle = innerHeight / 2;
+  // the last section may be too short to reach the middle line, so the page's end counts as it
+  const atEnd = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
+  const current = (atEnd && dockLinks[dockLinks.length - 1]) || dockLinks.find((link) => {
+    const rect = document.getElementById(link.dataset.section).getBoundingClientRect();
+    return rect.top <= middle && rect.bottom > middle;
+  }) || dockActive || dockLinks[0];
+  if (current === dockActive) return;
+  dockActive = current;
+  dockLinks.forEach((link) => link.setAttribute("aria-current", String(link === current)));
+  placeDockIndicator();
+}
+
+addEventListener("scroll", updateDock, { passive: true });
+addEventListener("resize", placeDockIndicator);
+document.fonts.ready.then(placeDockIndicator);
+updateDock();

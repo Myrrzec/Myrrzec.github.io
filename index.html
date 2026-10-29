@@ -8,8 +8,9 @@
     <link rel="preload" href="assets/portrait-dots.webp" as="image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@800&family=Space+Grotesk:wght@400;500;600;700&family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="demos.css" />
   </head>
   <body>
     <main id="top">
@@ -18,8 +19,8 @@
           <canvas id="morph-canvas" aria-hidden="true"></canvas>
           <div class="profile-info" aria-labelledby="profile-title">
             <p class="profile-label">YOUNG DEVELOPER / KAZAKHSTAN</p>
-            <h1 id="profile-title">Myrza.</h1>
-            <p class="profile-copy">I build useful digital products with AI, computer vision and interactive web technology.</p>
+            <h1 id="profile-title">Myrza</h1>
+            <p class="profile-copy">I build useful digital products.</p>
             <a class="text-link" href="#projects">Explore the projects <span aria-hidden="true">↓</span></a>
           </div>
         </div>
@@ -28,7 +29,33 @@
       <section class="service-index" id="projects" aria-label="Selected projects">
         <button class="service-chapter project-macros" type="button" data-project="macros" aria-haspopup="dialog">
           <span class="service-visual project-browser" aria-hidden="true">
-            <img src="assets/project-macros.png" alt="" />
+            <span class="demo" data-demo="macros">
+              <span class="demo-bar"><span class="demo-lights"><i></i><i></i><i></i></span><span class="demo-url">macros.makeworks.dev</span><span class="demo-more">&bull;&bull;&bull;</span></span>
+              <span class="demo-screen mt">
+                <span class="mt-nav"><span class="mt-logo">MACROS<em>.</em>TRACKER</span><span class="mt-signin">Sign in</span><span class="mt-btn">Create account</span></span>
+                <span class="mt-card">
+                  <span class="mt-h">Try it on a photo</span>
+                  <span class="mt-sub">No account needed. Snap your plate and see the macros.</span>
+                  <span class="mt-file"><span class="mt-choose">Choose File</span><span class="mt-name">No file chosen</span></span>
+                  <span class="mt-photo"><span class="mt-plate"></span><span class="mt-toast"></span><span class="mt-egg"></span><span class="mt-herb h1"></span><span class="mt-herb h2"></span><span class="mt-herb h3"></span></span>
+                  <span class="mt-right">
+                    <span class="mt-btn mt-analyze">Analyze photo</span>
+                    <span class="mt-skeleton"></span>
+                    <span class="mt-result">
+                      <span class="mt-row"><b>Scrambled eggs on toast</b><span class="mt-conf">High confidence</span></span>
+                      <span class="mt-grams">About 210 g</span>
+                      <span class="mt-stats">
+                        <span><b class="c-cal" data-to="412">0</b><small>kcal</small></span>
+                        <span><b class="c-protein" data-to="21">0</b><small>protein, g</small></span>
+                        <span><b class="c-fat" data-to="24">0</b><small>fat, g</small></span>
+                        <span><b class="c-carbs" data-to="28">0</b><small>carbs, g</small></span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span class="demo-cursor"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.3 2.9 6.6 2.9-1.3-2.9-6.5H19z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+              </span>
+            </span>
           </span>
           <span class="service-pill">AI meal tracking app</span>
           <span class="service-hint">Open project</span>
@@ -36,20 +63,44 @@
 
         <button class="service-chapter project-solver" type="button" data-project="solver" aria-haspopup="dialog">
           <span class="service-visual project-browser" aria-hidden="true">
-            <img src="assets/project-solver.png" alt="" />
+            <span class="demo" data-demo="solver">
+              <span class="demo-bar"><span class="demo-lights"><i></i><i></i><i></i></span><span class="demo-url">solve.makeworks.dev</span><span class="demo-more">&bull;&bull;&bull;</span></span>
+              <span class="demo-screen ms">
+                <span class="ms-nav"><span class="ms-logo"><span class="ms-icon"></span><b>Make</b><span>Solve</span></span><span class="ms-tab is-on">Solve</span><span class="ms-tab">Practice</span><span class="ms-tab">How it works</span><span class="ms-theme">Light</span></span>
+                <span class="ms-body">
+                  <span class="ms-view ms-scan">
+                    <span class="ms-step">Step 1 of 2</span>
+                    <span class="ms-h">Show the cube to the camera</span>
+                    <span class="ms-grid">
+                      <span class="ms-cam"><span class="ms-face"><span class="ms-frame"></span></span><span class="ms-hint">Hold the face steady for a second.</span></span>
+                      <span class="ms-side">
+                        <span class="ms-label">Faces captured</span>
+                        <span class="ms-count"><span class="ms-n">0</span><small> / 6</small></span>
+                        <span class="ms-chips"></span>
+                        <span class="ms-btn">Solve cube</span>
+                      </span>
+                    </span>
+                  </span>
+                  <span class="ms-view ms-solve">
+                    <span class="ms-step">Step 2 of 2</span>
+                    <span class="ms-h">Follow the moves</span>
+                    <span class="ms-grid">
+                      <span class="ms-stage"><span class="ms-cube"><span class="ms-side3 ms-top"></span><span class="ms-side3 ms-front"></span><span class="ms-side3 ms-right"></span></span></span>
+                      <span class="ms-panel">
+                        <span class="ms-label ms-of">Move 1 of 8</span>
+                        <span class="ms-move">R</span>
+                        <span class="ms-say">Turn the right face clockwise</span>
+                        <span class="ms-note">Keep the green center facing you.</span>
+                        <span class="ms-strip"></span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span class="demo-cursor"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.3 2.9 6.6 2.9-1.3-2.9-6.5H19z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+              </span>
+            </span>
           </span>
           <span class="service-pill">Camera-powered 3D solver</span>
-          <span class="service-hint">Open project</span>
-        </button>
-
-        <button class="service-chapter project-portrait" type="button" data-project="portrait" aria-haspopup="dialog">
-          <span class="service-visual project-particle" aria-hidden="true">
-            <span class="particle-ring ring-one"></span>
-            <span class="particle-ring ring-two"></span>
-            <span class="particle-ring ring-three"></span>
-            <span class="particle-core"></span>
-          </span>
-          <span class="service-pill">Interactive developer portfolio</span>
           <span class="service-hint">Open project</span>
         </button>
       </section>
@@ -61,15 +112,12 @@
       </section>
     </main>
 
-    <button class="sound-toggle" type="button" aria-pressed="true" aria-label="Turn transition sound off">
-      <span class="sound-indicator" aria-hidden="true"></span>
-      <span class="sound-label">Sound on</span>
-    </button>
 
     <nav class="bottom-dock" aria-label="Page navigation">
-      <a href="#top">Home</a>
-      <a href="#projects">Projects</a>
-      <a class="dock-primary" href="https://github.com/Myrrzec" target="_blank" rel="noopener">Start a project</a>
+      <span class="dock-indicator" aria-hidden="true"></span>
+      <a href="#top" data-section="intro">Home</a>
+      <a href="#projects" data-section="projects">Projects</a>
+      <a class="dock-primary" href="https://github.com/Myrrzec" target="_blank" rel="noopener" data-section="contact">Start a project</a>
     </nav>
 
     <dialog class="service-dialog" id="project-macros" aria-labelledby="macros-title">
@@ -110,25 +158,7 @@
       </div>
     </dialog>
 
-    <dialog class="service-dialog" id="project-portrait" aria-labelledby="portrait-title">
-      <div class="dialog-shell">
-        <button class="dialog-close" type="button" data-close-dialog aria-label="Close project">Close</button>
-        <div class="dialog-intro">
-          <p class="dialog-index">03 / CREATIVE DEVELOPMENT</p>
-          <h2 id="portrait-title">A portfolio where identity behaves like a living particle system.</h2>
-          <div class="dialog-summary">
-            <p>The opening word dissolves into thousands of particles, reforms as a portrait and reacts to the cursor like a fluid surface.</p>
-            <a class="project-visit" href="#top" data-close-and-home>View experience <span>↑</span></a>
-          </div>
-        </div>
-        <div class="dialog-grid">
-          <article><span>01</span><h3>Source</h3><p>Every dot is sampled from the original portrait, preserving its density and silhouette.</p></article>
-          <article><span>02</span><h3>Motion</h3><p>Scroll controls the transformation while spiral paths keep the transition readable.</p></article>
-          <article><span>03</span><h3>Physics</h3><p>Cursor collisions push particles around a soft sphere before they flow back home.</p></article>
-        </div>
-      </div>
-    </dialog>
-
     <script src="script.js"></script>
+    <script src="demos.js"></script>
   </body>
 </html>
