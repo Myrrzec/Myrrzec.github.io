@@ -36,6 +36,10 @@ let dot = 2, headWidth = 0, font = "";
 let wordLeft = 0, wordRight = 0, wordSpan = 1;
 let parts = [], portrait = null;
 let target = 0, shown = 0, lastTime = 0;
+// on first load the word is typed out letter by letter: a short pause after the M, then
+// the rest a little quicker, like a hand that has found the word; ms after TYPE_DELAY
+const TYPE_DELAY = 300, LETTER_AT = [0, 190, 295, 400];
+let typeStart = -Infinity;
 
 const rand = (() => {
   let seed = 7;
@@ -64,6 +68,9 @@ function drawWord(targetCtx, offsetY = 0) {
   targetCtx.letterSpacing = `${-parseFloat(font.split(" ")[1]) * 0.045}px`;
   targetCtx.fillText(WORD, cx, cy + offsetY);
 }
+
+// how many letters of the word are typed at `now`
+const typed = (now) => LETTER_AT.filter((at) => now - typeStart - TYPE_DELAY >= at).length;
 
 function wordPoints(step) {
   const data = offscreen((bufferCtx) => {
@@ -260,6 +267,58 @@ function updateSand(amount) {
   sand.tone.frequency.setTargetAtTime(3000 + 2200 * build + 400 * motion, now, 0.25);
 }
 
+// one recorded keystroke per typed letter: assets/keys.mp3 holds four single keys, one every
+// KEY_SLOT seconds. Each starts just before its hit, so the encoder's lead-in doesn't matter,
+// and each is brought to the same peak, KEY_PEAK, so no key jumps out
+const KEY_PEAK = 0.16, KEY_SLOT = 0.25, KEY_LENGTH = 0.12;
+let keys = null;
+
+function loadKeys(audioCtx) {
+  keys ??= fetch("assets/keys.mp3")
+    .then((response) => response.arrayBuffer())
+    .then((data) => audioCtx.decodeAudioData(data))
+    .then((buffer) => {
+      const samples = buffer.getChannelData(0);
+      const rate = buffer.sampleRate;
+      const starts = [], gains = [];
+      for (let slot = 0; slot * KEY_SLOT < buffer.duration - 0.05; slot++) {
+        const from = Math.floor(slot * KEY_SLOT * rate);
+        const end = Math.min(samples.length, from + Math.floor(KEY_SLOT * rate));
+        let peak = 0;
+        for (let i = from; i < end; i++) peak = Math.max(peak, Math.abs(samples[i]));
+        let hit = from;
+        while (hit < end && Math.abs(samples[hit]) < peak * 0.3) hit++;
+        starts.push(Math.max(from / rate, hit / rate - 0.006));
+        gains.push(KEY_PEAK / Math.max(peak, 0.001));
+      }
+      return { buffer, starts, gains };
+    })
+    .catch(() => null);
+  return keys;
+}
+
+function keystroke(audioCtx, { buffer, starts, gains }, letter, when) {
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+  const gain = audioCtx.createGain();
+  gain.gain.value = gains[letter % gains.length];
+  source.connect(gain).connect(audioCtx.destination);
+  source.start(Math.max(when, audioCtx.currentTime), starts[letter % starts.length], KEY_LENGTH);
+}
+
+// schedules the keystrokes of the letters still to come; a browser that hasn't been clicked yet
+// keeps audio locked, so the letters typed before the first click stay silent
+async function typingSound() {
+  if (!sand || sand.audioCtx.state !== "running") return;
+  const audioCtx = sand.audioCtx;
+  const sounds = await loadKeys(audioCtx);
+  if (!sounds) return;
+  for (let letter = 0; letter < WORD.length; letter++) {
+    const delay = (typeStart + TYPE_DELAY + LETTER_AT[letter] - performance.now()) / 1000;
+    if (delay >= -0.02) keystroke(audioCtx, sounds, letter, audioCtx.currentTime + delay);
+  }
+}
+
 for (const type of ["pointerdown", "keydown", "touchend", "wheel"]) {
   addEventListener(type, unlockSand, { capture: true, passive: true });
 }
@@ -324,7 +383,20 @@ function frame(now) {
     ctx.closePath();
     ctx.clip();
     ctx.fillStyle = INK;
-    drawWord(ctx, -wordLift);
+    const letters = amount > 0 ? WORD.length : typed(now);
+    if (letters < WORD.length) {
+      // the word is centred, so its typed part is the left slice of the full word
+      ctx.font = font;
+      ctx.letterSpacing = `${-parseFloat(font.split(" ")[1]) * 0.045}px`;
+      const left = cx - ctx.measureText(WORD).width / 2;
+      const typedRight = left + (letters ? ctx.measureText(WORD.slice(0, letters)).width : 0);
+      ctx.beginPath();
+      ctx.rect(0, 0, typedRight, H);
+      ctx.clip();
+      drawWord(ctx, -wordLift);
+    } else {
+      drawWord(ctx, -wordLift);
+    }
     ctx.restore();
   }
 
@@ -557,6 +629,15 @@ Promise.all([document.fonts.load("800 100px Outfit"), loadPortrait()]).then(() =
   build();
   updateProgress();
   shown = target;
+  if (!reduce && shown < A0) {
+    typeStart = performance.now();
+    // browsers that already trust the site let audio start without a click
+    if (!sand) sand = createSand();
+    if (sand) {
+      loadKeys(sand.audioCtx);
+      sand.audioCtx.resume().then(typingSound, () => {});
+    }
+  }
   document.body.classList.add("is-ready");
   requestAnimationFrame(frame);
 });
