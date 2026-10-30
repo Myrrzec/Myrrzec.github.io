@@ -40,6 +40,9 @@ let target = 0, shown = 0, lastTime = 0;
 // the rest a little quicker, like a hand that has found the word; ms after TYPE_DELAY
 const TYPE_DELAY = 300, LETTER_AT = [0, 190, 295, 400];
 let typeStart = -Infinity;
+// the first screen: the word Click in dots, waiting for the click that lets the page play sound
+const GATE_WORD = "Click";
+let gateDots = null;
 
 const rand = (() => {
   let seed = 7;
@@ -83,6 +86,34 @@ function wordPoints(step) {
       const px = Math.min(W - 1, Math.round(x + (rand() - 0.5) * step * 0.6));
       const py = Math.min(H - 1, Math.round(y + (rand() - 0.5) * step * 0.6));
       if (data[(py * W + px) * 4 + 3] > 128) points.push({ x: px, y: py });
+    }
+  }
+  return points;
+}
+
+const gateGrain = () => Math.max(0.9, parseFloat(font.split(" ")[1]) * 0.016);
+
+// Click in the same type as Make, as loose dots a little coarser than the word's, so it reads as sand
+function gatePoints() {
+  const data = offscreen((bufferCtx) => {
+    bufferCtx.fillStyle = "#000";
+    bufferCtx.font = font;
+    bufferCtx.textAlign = "center";
+    bufferCtx.textBaseline = "middle";
+    bufferCtx.letterSpacing = `${-parseFloat(font.split(" ")[1]) * 0.045}px`;
+    bufferCtx.fillText(GATE_WORD, cx, cy);
+  });
+  // grain size follows the type size, not the portrait's dots, which can be too fine to read as letters
+  const grain = gateGrain();
+  const step = grain * 2.3;
+  const points = [];
+  for (let y = 0; y < H; y += step) {
+    for (let x = 0; x < W; x += step) {
+      const px = Math.min(W - 1, Math.round(x + (rand() - 0.5) * step * 0.7));
+      const py = Math.min(H - 1, Math.round(y + (rand() - 0.5) * step * 0.7));
+      if (data[(py * W + px) * 4 + 3] > 128) {
+        points.push({ x: px, y: py, seed: rand() * Math.PI * 2, size: 0.8 + rand() * 0.45 });
+      }
     }
   }
   return points;
@@ -150,6 +181,7 @@ function build() {
       seed: rand() * Math.PI * 2,
     };
   });
+  if (gateDots && !gateDots.clickAt) gateDots.points = gatePoints();
 }
 
 function spiral(x0, y0, x1, y1, amount, turns, wave, seed) {
@@ -374,6 +406,7 @@ function frame(now) {
   ctx.fillStyle = BG;
   ctx.fillRect(0, 0, W, H);
   ctx.globalAlpha = 1;
+  if (gateDots) drawGate(now, dtSeconds);
   if (front < 1.1) {
     ctx.save();
     ctx.beginPath();
@@ -625,17 +658,122 @@ document.querySelectorAll(".service-dialog").forEach((dialog) => {
   });
 });
 
+// the first screen asks for one click: browsers only play sound after one, and the typing and
+// the sand both want it. A shockwave runs out from the click, the dots it reaches are thrown off and
+// fall away like sand with a short pour of sound, then Make is typed
+const gate = document.querySelector(".sound-gate");
+const GATE_WAVE = 1.4;     // px per ms the shockwave travels
+const GATE_BLAST = 520;    // px/s a dot right at the click is thrown
+const GATE_GRAVITY = 950;  // px/s²
+const GATE_FADE = 0.85;    // s a thrown dot takes to vanish
+const GATE_TYPE_AFTER = 650; // ms from the click to the first letter
+
+function drawGate(now, dtSeconds) {
+  const time = now / 1000;
+  const { points, clickAt, x: hitX, y: hitY } = gateDots;
+  let alive = 0;
+  const grain = gateGrain();
+  ctx.fillStyle = INK;
+  for (const point of points) {
+    let x = point.x, y = point.y, alpha = 1;
+    if (clickAt === null || now < clickAt + point.delay) {
+      // waiting: each grain trembles a little in place
+      x += Math.sin(time * 2.3 + point.seed * 5) * 0.55;
+      y += Math.cos(time * 1.9 + point.seed * 3) * 0.55;
+      alive++;
+    } else {
+      if (point.vx === undefined) {
+        const dx = point.x - hitX, dy = point.y - hitY;
+        const distance = Math.hypot(dx, dy) || 1;
+        const push = GATE_BLAST * (0.55 + Math.random() * 0.6) / (1 + distance / 160);
+        point.vx = (dx / distance) * push + (Math.random() - 0.5) * 60;
+        point.vy = (dy / distance) * push - 120 * Math.random();
+        point.ox = 0;
+        point.oy = 0;
+        point.age = 0;
+      }
+      point.age += dtSeconds;
+      point.vy += GATE_GRAVITY * dtSeconds;
+      const drag = Math.exp(-2.2 * dtSeconds);
+      point.vx *= drag;
+      point.vy *= drag;
+      point.ox += point.vx * dtSeconds;
+      point.oy += point.vy * dtSeconds;
+      x += point.ox;
+      y += point.oy;
+      alpha = 1 - point.age / GATE_FADE;
+      if (alpha <= 0) continue;
+      alive++;
+    }
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.arc(x, y, grain * point.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  if (!alive) {
+    gateDots = null;
+    gate.hidden = true;
+    document.documentElement.classList.remove("gate-open");
+  }
+}
+
+// a short pour of fine sand for the burst, from the same grains as the scroll sound
+function sandBurst(audioCtx) {
+  const source = audioCtx.createBufferSource();
+  source.buffer = sandBuffer(audioCtx, 1.3, 5000);
+  const highpass = audioCtx.createBiquadFilter();
+  highpass.type = "highpass";
+  highpass.frequency.value = 1800;
+  const lowpass = audioCtx.createBiquadFilter();
+  lowpass.type = "lowpass";
+  lowpass.frequency.value = 5200;
+  lowpass.Q.value = 0.4;
+  const gain = audioCtx.createGain();
+  const start = audioCtx.currentTime;
+  gain.gain.setValueAtTime(0, start);
+  gain.gain.linearRampToValueAtTime(0.32, start + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, start + 1.2);
+  source.connect(highpass).connect(lowpass).connect(gain).connect(audioCtx.destination);
+  source.start(start);
+  source.stop(start + 1.3);
+}
+
+function openGate(event) {
+  gate.disabled = true;
+  unlockSand();
+  if (sand) loadKeys(sand.audioCtx);
+  const rect = canvas.getBoundingClientRect();
+  // a keyboard press has no point, so the wave starts from the middle of the word
+  const x = event.clientX ? event.clientX - rect.left : cx;
+  const y = event.clientY ? event.clientY - rect.top : cy;
+  const now = performance.now();
+  gateDots.x = x;
+  gateDots.y = y;
+  gateDots.clickAt = now;
+  gateDots.points.forEach((point) => {
+    point.delay = Math.hypot(point.x - x, point.y - y) / GATE_WAVE + Math.random() * 40;
+  });
+  typeStart = now + GATE_TYPE_AFTER - TYPE_DELAY;
+  sand?.audioCtx.resume().then(() => {
+    sandBurst(sand.audioCtx);
+    typingSound();
+  }, () => {});
+}
+
 Promise.all([document.fonts.load("800 100px Outfit"), loadPortrait()]).then(() => {
   build();
   updateProgress();
   shown = target;
-  if (!reduce && shown < A0) {
-    typeStart = performance.now();
-    // browsers that already trust the site let audio start without a click
-    if (!sand) sand = createSand();
-    if (sand) {
-      loadKeys(sand.audioCtx);
-      sand.audioCtx.resume().then(typingSound, () => {});
+  if (shown < A0) {
+    if (reduce) {
+      typeStart = -Infinity;
+    } else {
+      typeStart = Infinity; // nothing typed until the click
+      gateDots = { points: gatePoints(), clickAt: null, x: 0, y: 0 };
+      gate.hidden = false;
+      document.documentElement.classList.add("gate-open");
+      gate.addEventListener("click", openGate, { once: true });
     }
   }
   document.body.classList.add("is-ready");

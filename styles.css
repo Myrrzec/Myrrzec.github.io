@@ -53,6 +53,21 @@ body.is-ready #morph-canvas { animation: canvas-enter 1.15s cubic-bezier(.16,1,.
   0% { opacity: 0; transform: translateY(58px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+/* first screen: the word Click drawn in dots on the canvas; this transparent button only catches
+   the click (browsers play sound after one), the dots scatter from it, then Make is typed */
+html.gate-open { overflow: hidden; }
+.sound-gate {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.sound-gate[hidden] { display: none; }
+.sound-gate:focus-visible { outline: none; }
+
 .profile-info {
   position: absolute;
   z-index: 2;
