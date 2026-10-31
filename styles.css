@@ -294,8 +294,8 @@ html.gate-open { overflow: hidden; }
 }
 .contact > p { margin-bottom: 30px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
 .contact h2 {
-  margin-bottom: 42px;
-  font-size: clamp(56px, 8vw, 130px);
+  margin-bottom: 28px;
+  font-size: clamp(38px, 5.3vw, 87px);
   line-height: .88;
   letter-spacing: -.07em;
   font-weight: 520;
