@@ -300,6 +300,7 @@ html.gate-open { overflow: hidden; }
   letter-spacing: -.07em;
   font-weight: 520;
 }
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 44px; }
 .contact-link { padding-bottom: 7px; border-bottom: 1px solid currentColor; font-size: clamp(17px, 1.6vw, 24px); }
 .contact-link span { margin-left: 12px; }
 
