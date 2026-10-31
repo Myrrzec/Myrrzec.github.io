@@ -300,9 +300,18 @@ html.gate-open { overflow: hidden; }
   letter-spacing: -.07em;
   font-weight: 520;
 }
-.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 44px; }
-.contact-link { padding-bottom: 7px; border-bottom: 1px solid currentColor; font-size: clamp(17px, 1.6vw, 24px); }
-.contact-link span { margin-left: 12px; }
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.contact-link {
+  display: grid;
+  place-items: center;
+  width: clamp(56px, 5vw, 72px);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.contact-link svg { width: 42%; height: 42%; }
+.contact-link:hover, .contact-link:focus-visible { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
 .bottom-dock {
   position: fixed;
