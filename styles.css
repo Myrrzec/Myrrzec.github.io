@@ -300,11 +300,11 @@ html.gate-open { overflow: hidden; }
   letter-spacing: -.07em;
   font-weight: 520;
 }
-.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .contact-link {
   display: grid;
   place-items: center;
-  width: clamp(56px, 5vw, 72px);
+  width: clamp(40px, 3.4vw, 48px);
   aspect-ratio: 1;
   border: 1px solid var(--line);
   border-radius: 50%;
