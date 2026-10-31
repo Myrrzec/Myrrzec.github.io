@@ -294,8 +294,8 @@ html.gate-open { overflow: hidden; }
 }
 .contact > p { margin-bottom: 30px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
 .contact h2 {
-  margin-bottom: 28px;
-  font-size: clamp(29px, 4.1vw, 67px);
+  margin-bottom: 36px;
+  font-size: clamp(49px, 6.9vw, 113px);
   line-height: .88;
   letter-spacing: -.07em;
   font-weight: 520;
@@ -320,20 +320,29 @@ html.gate-open { overflow: hidden; }
   bottom: 24px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 5px;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 999px;
-  background: rgba(15,15,15,.94);
-  color: #fff;
-  box-shadow: 0 12px 40px rgba(0,0,0,.18);
-  backdrop-filter: blur(16px);
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, 25px);
   transition: opacity .45s ease, transform .55s cubic-bezier(.16,1,.3,1);
 }
 body.dock-visible .bottom-dock { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+.dock-pill,
+.dock-icon {
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(15,15,15,.94);
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+  backdrop-filter: blur(16px);
+}
+.dock-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline: 4px;
+  padding: 5px;
+}
 /* the white pill slides under the link of the section on screen */
 .dock-indicator {
   position: absolute;
@@ -345,7 +354,7 @@ body.dock-visible .bottom-dock { opacity: 1; pointer-events: auto; transform: tr
   background: #fff;
   transition: transform .55s cubic-bezier(.16,1,.3,1), width .55s cubic-bezier(.16,1,.3,1);
 }
-.bottom-dock a {
+.dock-pill a {
   position: relative;
   min-width: 86px;
   padding: 12px 17px;
@@ -355,27 +364,26 @@ body.dock-visible .bottom-dock { opacity: 1; pointer-events: auto; transform: tr
   text-align: center;
   transition: color .25s ease, background .25s ease;
 }
-.bottom-dock a:hover { color: #fff; background: rgba(255,255,255,.1); }
-.bottom-dock a[aria-current="true"],
-.bottom-dock a[aria-current="true"]:hover { color: #111; background: transparent; }
-.bottom-dock .dock-primary { min-width: 110px; }
-/* contact icons stay folded until the visitor first reaches the contact section */
-.bottom-dock .dock-icon {
+.dock-pill a:hover { color: #fff; background: rgba(255,255,255,.1); }
+.dock-pill a[aria-current="true"],
+.dock-pill a[aria-current="true"]:hover { color: #111; background: transparent; }
+.dock-pill .dock-primary { min-width: 110px; }
+/* separate contact circles beside the dock, folded until the visitor first reaches the contact section */
+.dock-icon {
   display: grid;
   place-items: center;
   flex: none;
-  min-width: 0;
   width: 0;
-  height: 38px;
-  margin-left: -4px;
-  padding: 0;
+  height: 50px;
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
-  transition: width .55s cubic-bezier(.16,1,.3,1), margin .55s cubic-bezier(.16,1,.3,1), opacity .4s ease .15s, visibility 0s .55s, color .25s ease, background .25s ease;
+  transform: scale(.6);
+  transition: width .55s cubic-bezier(.16,1,.3,1), margin .55s cubic-bezier(.16,1,.3,1), opacity .4s ease .1s, transform .55s cubic-bezier(.16,1,.3,1) .05s, visibility 0s .55s, background .25s ease, color .25s ease;
 }
-.bottom-dock .dock-icon svg { width: 16px; height: 16px; flex: none; }
-.bottom-dock.is-open .dock-icon { width: 38px; margin-left: 0; opacity: 1; visibility: visible; transition-delay: 0s, 0s, .15s, 0s, 0s, 0s; }
+.dock-icon svg { width: 18px; height: 18px; flex: none; }
+.dock-icon:hover, .dock-icon:focus-visible { background: #fff; color: #111; }
+.bottom-dock.is-open .dock-icon { width: 50px; margin-inline: 4px; opacity: 1; visibility: visible; transform: none; transition-delay: 0s, 0s, .1s, .05s, 0s, 0s, 0s; }
 
 .service-dialog {
   width: 100%;
@@ -462,11 +470,13 @@ body.dock-visible .bottom-dock { opacity: 1; pointer-events: auto; transform: tr
   .digital-frame { width: min(88vw, 430px); }
   .project-browser { width: min(92vw, 540px); border-radius: 10px; }
   .service-hint { display: none; }
-  .bottom-dock { bottom: 14px; width: calc(100% - 24px); justify-content: stretch; }
-  .bottom-dock a { min-width: 0; flex: 1; padding-inline: 10px; }
-  .bottom-dock .dock-primary { min-width: 0; flex: 1.35; }
-  .bottom-dock .dock-icon { flex: none; padding: 0; }
-  .bottom-dock.is-open .dock-icon { width: 34px; }
+  .bottom-dock { bottom: 14px; width: calc(100% - 16px); }
+  .dock-pill { flex: 1; min-width: 0; margin-inline: 2px; }
+  .dock-pill a { min-width: 0; flex: 1; padding-inline: 6px; }
+  .dock-pill .dock-primary { min-width: 0; flex: 1.35; }
+  .dock-icon { height: 40px; }
+  .dock-icon svg { width: 16px; height: 16px; }
+  .bottom-dock.is-open .dock-icon { width: 40px; margin-inline: 2px; }
   .service-dialog { border-radius: 24px 24px 0 0; }
   .dialog-shell { width: calc(100% - 40px); min-height: 82dvh; padding-top: 78px; }
   .dialog-intro h2 { font-size: 40px; }

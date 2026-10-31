@@ -803,25 +803,15 @@ function updateDock() {
   if (current === dockActive) return;
   dockActive = current;
   dockLinks.forEach((link) => link.setAttribute("aria-current", String(link === current)));
-  // once the visitor reaches contact, the icons unfold around its link and stay for the rest of the visit
+  // once the visitor reaches contact, the contact circles unfold beside the dock and stay for the rest of the visit
   if (current.dataset.section === "contact" && !dock.classList.contains("is-open")) {
     dock.classList.add("is-open");
-    followDockIndicator(700);
   }
   placeDockIndicator();
 }
 
-// keep the pill under its link while the icons push the links sideways
-function followDockIndicator(duration) {
-  const end = performance.now() + duration;
-  const step = () => {
-    placeDockIndicator();
-    if (performance.now() < end) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
-
 addEventListener("scroll", updateDock, { passive: true });
-addEventListener("resize", placeDockIndicator);
+// the pill narrows on phones while the contact circles unfold, so follow its size rather than the window
+new ResizeObserver(placeDockIndicator).observe(dock.querySelector(".dock-pill"));
 document.fonts.ready.then(placeDockIndicator);
 updateDock();
