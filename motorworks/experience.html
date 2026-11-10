@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About this experience | Make Motorworks</title>
+  <meta name="description" content="How the Make Motorworks 3D studio was put together: art direction, interactive 3D, camera choreography, interface and asset optimisation, with credits for the 3D models.">
+  <link rel="icon" href="./favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./editorial.css">
+</head>
+<body>
+  <header><a class="logo" href="./">MAKE<span> MOTORWORKS</span></a><nav><a href="./inventory.html#inventory">The collection ↗</a><a href="./#philosophy">Our perspective</a></nav><a class="menu" href="./">Back to Make Motorworks ↗</a></header>
+  <main class="about">
+    <p class="eyebrow">CASE NOTE / THE 3D STUDIO</p>
+    <h1 class="about-title">ABOUT THIS<br><span>EXPERIENCE.</span></h1>
+    <p class="about-lede">The homepage opens on a campaign image. One button turns it into a studio with four 911s: the 992 GT3 from the campaign, the 992 Turbo S, the 992 Targa 4S and a 991 Carrera S. For each one you can walk around it, open the driver's door, sit inside, lift the front lid, look at the engine end and the wheels up close, each with a short spec sheet for that car. This note covers what was designed and built for it, and where the cars themselves come from.</p>
+
+    <section class="about-row">
+      <p class="eyebrow">01</p>
+      <div>
+        <h2>Art direction</h2>
+        <p>The studio continues the campaign: a silver car inside a round pavilion of deep red, board-formed concrete, a glossy floor and warm low light. A window band runs all the way round between a low parapet and a deep upper wall, so from every angle there is a spruce forest behind the car, fading into morning mist. The concrete (30 cm boards, grain, seams, tie holes, weathering and a relief map for the light to catch) is drawn in code, and the forest is three rings of painted silhouettes at 40, 62 and 92 metres that slide against each other as you walk round. None of it costs an image download. Typography stays the same as the rest of the site: tall, narrow Barlow Condensed for headlines, Manrope for everything you read or press.</p>
+        <p>The campaign image shows a silver 992 GT3 with the swan-neck wing and yellow calipers, and that is the car the studio opens on, painted to match. The Turbo S, the Targa 4S and the Carrera S are a tap away in the picker above the car. Switching keeps you in the same room: the next car loads while the current one stays on screen, then the last frame is frozen and dissolves into the new car as the camera settles. Rather than pretend the photo turns into a model, the page hands over: the headline lifts away, the photo leans in under a warm scrim while "Into the studio" rises in its place, and the studio fades in over the photo as the camera glides down to the car. Closing runs the same way back. Opening and closing can interrupt each other at any point.</p>
+      </div>
+    </section>
+
+    <section class="about-row">
+      <p class="eyebrow">02</p>
+      <div>
+        <h2>Interactive 3D</h2>
+        <p>Three.js renders the cars. The source models were built by different people in different ways, so each goes through one preparation script with a short recipe per car. It bakes every transform into the geometry and puts every car in one frame: metres, nose forward, driver's side to the left, tyres on the floor. Then it lifts the moving parts out into their own groups. Where a door or lid is merged into the body mesh, it takes only the connected pieces that sit wholly inside the panel's outline, so the part comes away along its real panel gaps; small things that rest on a panel without belonging to it, like the GT3's wiper, are held back.</p>
+        <p>Each part then gets a pivot on its real hinge or axle, measured from the geometry, so the door swings from its leading edge, the lid from the windscreen and the front wheels about their steering axis. On the Turbo S the rear wing rises and tilts as it does on the road. Every moving part runs from 0 (closed) to 1 (open), and one table describes the six views for every car: camera, target, lens and which parts are open. Hotspots are placed by casting a ray at whichever car is loaded, so they land on its own panels.</p>
+        <p>Some fixes were needed. The Turbo S model has its driver's door modelled open; it was closed by fitting the door skin onto the mirrored passenger door (a rigid fit, mean gap 5.7 mm), with the handle moving with it. Neither 992 model has anything under the front lid and the 991 closes it with a flat panel, so each car gets a carpeted luggage well shaped from its own lid, and on the 992s the inside of the lid is drawn too. There is no engine in any of the models; the rear view shows what an owner sees from outside.</p>
+        <p>Every close-up comes with a spec sheet for that car: doors and glass, the cabin, the front lid and aerodynamics, engine figures, wheels, tyres and brakes. The 992 figures come from Porsche's press releases for the GT3 (2021), Turbo S (2020) and Targa 4S (2020); where they depend on the version, the sheet says which one (the GT3's 3.4 s is with PDK, 3.9 s with the manual). No luggage volume is given for the 992s because no figure could be confirmed. For the 991 the luggage volume is given as about 135 litres because sources differ by a few litres, and its 4.1 s sprint is with PDK and Sport Chrono, 4.5 s with the manual.</p>
+      </div>
+    </section>
+
+    <section class="about-row">
+      <p class="eyebrow">03</p>
+      <div>
+        <h2>Camera choreography</h2>
+        <p>The camera travels around the car on an elliptical path that follows its plan shape, rising slightly on long swings. A rounded box around the body pushes the lens back out whenever it would enter a panel, during transitions and while you orbit. The only way into the cabin is through the open driver's door: the door opens first, the camera passes the doorway, and it closes again only after the camera is out.</p>
+        <p>Any new choice cancels the current move and starts from wherever the camera and the parts are, so fast clicking cannot leave the car half open. Inside, the camera turns on the spot within limits that keep it in the driver's seat.</p>
+      </div>
+    </section>
+
+    <section class="about-row">
+      <p class="eyebrow">04</p>
+      <div>
+        <h2>Responsive interface</h2>
+        <p>Every view is reachable from a plain text menu that works with the keyboard; Escape steps back one level and then closes the studio. Hotspots on the car are pointer shortcuts only. They hide when their panel faces away or something on the car sits between them and the camera. On wide screens the spec sheet sits above a two-column menu on the right, and the frame shifts slightly so the car stays clear of the text. On narrow screens the menu becomes a strip at the bottom with the spec sheet as a swipeable row above it, touch targets grow to 56 px, and a vertical swipe still scrolls the page. The mouse wheel scrolls the page too; zoom is a pinch, ctrl or cmd with the wheel, or a double-click on the car.</p>
+        <p>With reduced motion turned on, every transition is instant. Without WebGL 2 the button explains why the studio can't open, and the photo stays.</p>
+      </div>
+    </section>
+
+    <section class="about-row">
+      <p class="eyebrow">05</p>
+      <div>
+        <h2>Asset optimisation</h2>
+        <p>Nothing 3D loads with the first screen. The code is fetched when you hover or focus the button, the GT3 only when you press it, and the other cars only when you pick them. Models are sent gzipped, and the loading line shows real bytes received against the file's real size.</p>
+        <dl class="about-facts">
+          <div><dt>911 GT3 (992)</dt><dd>Source: 66.5 MB archive, 188 MB geometry, 2,559,884 triangles. Delivered: 20.2 MB GLB, 12.1 MB over the wire, 1,573,874 triangles in 70 meshes. Simplification stops there because the grilles and lamp patterns are made of many small separate pieces.</dd></div>
+          <div><dt>911 Turbo S (992)</dt><dd>Source: 31.5 MB archive, 17.3 MB geometry. Delivered: 10.1 MB GLB, 8.8 MB over the wire, 423,947 triangles in 71 meshes</dd></div>
+          <div><dt>911 Targa 4S (992)</dt><dd>Source: 10.8 MB archive, untextured. Delivered: 3.3 MB GLB, 1.9 MB over the wire, 576,426 triangles in 42 meshes</dd></div>
+          <div><dt>911 Carrera S (991)</dt><dd>Source: 8.5 MB archive. Delivered: 4.9 MB GLB, 4.1 MB over the wire, 242,744 triangles in 214 meshes</dd></div>
+          <div><dt>Compression</dt><dd>Meshopt geometry with quantised positions and normals, textures re-encoded as JPEG and capped at 1024 px, then gzip. Every interior ships in the same file as its car.</dd></div>
+          <div><dt>Libraries</dt><dd>Three.js r180 and GSAP 3.13, 180 KB and 50 KB gzipped core files</dd></div>
+          <div><dt>Rendering</dt><dd>Draws only while something moves and stops entirely when the studio is scrolled away or the tab is hidden. Pixel ratio capped at 1.5 on touch screens, where the floor reflection is also left out.</dd></div>
+          <div><dt>Studio set</dt><dd>Walls, forest, mist and sky are generated in the browser: no textures or models to download beyond the car</dd></div>
+          <div><dt>Measured here</dt><dd>On the development machine (Apple M4, 2880 × 1548 canvas, floor reflection on, forest pavilion), 552 frames during camera moves averaged 16.6 ms; 95% were under 18.9 ms and the slowest took 30.8 ms. This was measured with the Carrera S only; the other cars have not been timed, and nothing has been measured on phones yet.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="about-row about-credits" id="credits">
+      <p class="eyebrow">06</p>
+      <div>
+        <h2>Credits</h2>
+        <p>None of the cars was modelled for this site. Each is used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+        <p><strong>911 GT3 (992).</strong> “<a href="https://sketchfab.com/3d-models/porsche-911-gt3-2022-39df8be273464c6980171f5758bfde97">Porsche 911 GT3 2022</a>” by <a href="https://sketchfab.com/sohyalebret">kevin (ケビン)</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Changes made here: rescaled to the real car's length, door, front lid and front wheels split into moving parts, materials redefined (silver paint, glass, metals, cabin trim, yellow calipers), simplified and compressed geometry and textures, and the added luggage well.</p>
+        <p><strong>911 Turbo S (992).</strong> “<a href="https://sketchfab.com/3d-models/porsche-911-with-interior-877b1bc1739f4a2bb65d62fd7ffd9f75">Porsche 911 with interior</a>” by <a href="https://sketchfab.com/n.brizitskaya">n.brizitskaya</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Changes made here: the open driver's door closed, door, front lid, rear wing and front wheels split into moving parts, new paint, glass and lamp materials, yellow calipers and black belts, compressed geometry and textures, and the added luggage well.</p>
+        <p><strong>911 Targa 4S (992).</strong> “<a href="https://sketchfab.com/3d-models/porsche-911-992-targa-s-2c929bad2b6c41a2a35867e5d8a4f5f3">Porsche 911 992 Targa S</a>” by <a href="https://sketchfab.com/niev">Nieve5677</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Changes made here: turned, centred and scaled to the real car's length, door, front lid and front wheels cut out of the body along their panel gaps, every material defined (the source is untextured), compressed geometry and the added luggage well. The upload is titled Targa S; every 992 Targa has all-wheel drive, so it is shown as the Targa 4S.</p>
+        <p><strong>911 Carrera S (991).</strong> “<a href="https://sketchfab.com/3d-models/2015-porsche-911-carrera-s-rigged-mid-poly-7fd67e408409449c98e3c7be35b40aa7">2015 porsche 911 carrera s rigged mid-poly</a>” by <a href="https://sketchfab.com/ShaheerHashmi">ShaheerHashmi</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Changes made here: silver paint, retuned glass, leather, plastics and wheels, a corrected brake caliper material, the added luggage well, compressed geometry and textures, and runtime pivots for the moving parts.</p>
+        <p>That upload appears to build on an earlier Sketchfab model, “2015 - Porsche 911 Carrera S (Rigged) | Mid-Poly”, which is no longer online; its author could not be identified.</p>
+        <p><strong>Libraries.</strong> <a href="https://threejs.org/">Three.js</a> (MIT licence) and <a href="https://gsap.com/">GSAP</a> (standard GSAP licence).</p>
+        <p><strong>Everything else</strong> on this page, the studio set, camera work, interface and code, was designed and built for Make Motorworks. Porsche, 911, Carrera, Targa, GT3 and Turbo S are trademarks of Dr. Ing. h.c. F. Porsche AG. Make Motorworks is an independent dealer concept, not affiliated with Porsche.</p>
+      </div>
+    </section>
+  </main>
+  <footer><a class="logo" href="./">MAKE</a><p>Independent dealer concept. Not affiliated with Porsche AG.</p><div><a href="./experience">About this experience</a><a href="./credits">Photo credits</a><a href="./privacy">Privacy</a><a href="./terms">Terms</a></div></footer>
+</body>
+</html>

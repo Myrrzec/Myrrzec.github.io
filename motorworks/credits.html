@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo credits | Make Motorworks</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="container prose">
+    <h1>Photo credits</h1>
+    <p>The photos on this site come from Wikimedia Commons and are used under the licences listed with each one. Thank you to the photographers.</p>
+    <ul class="credits" data-credits aria-busy="true"></ul>
+  </main>
+  <script type="module">
+    import { mountChrome, loadInventory, carArt, fullName, photoCredit, escapeHtml } from './shop.js';
+
+    mountChrome();
+    const list = document.querySelector('[data-credits]');
+    try {
+      const { cars } = await loadInventory();
+      const credited = cars.filter((c) => c.photo);
+      list.innerHTML = credited.length
+        ? credited
+            .map(
+              (car) => `<li>
+                <a class="art" href="./car?id=${encodeURIComponent(car.id)}">${carArt(car)}</a>
+                <div>
+                  <p class="credits__name">${escapeHtml(fullName(car))}</p>
+                  <p>${photoCredit(car)}</p>
+                </div>
+              </li>`,
+            )
+            .join('')
+        : '<li><p>No third-party photos are in use right now.</p></li>';
+    } catch (err) {
+      list.innerHTML = `<li><p class="notice">${escapeHtml(err.message)}</p></li>`;
+    } finally {
+      list.removeAttribute('aria-busy');
+    }
+  </script>
+</body>
+</html>

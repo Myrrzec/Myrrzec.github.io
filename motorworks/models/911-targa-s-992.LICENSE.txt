@@ -1,0 +1,11 @@
+Model Information:
+* title:	Porsche 911 992 Targa S
+* source:	https://sketchfab.com/3d-models/porsche-911-992-targa-s-2c929bad2b6c41a2a35867e5d8a4f5f3
+* author:	Nieve5677 (https://sketchfab.com/niev)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Porsche 911 992 Targa S" (https://sketchfab.com/3d-models/porsche-911-992-targa-s-2c929bad2b6c41a2a35867e5d8a4f5f3) by Nieve5677 (https://sketchfab.com/niev) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

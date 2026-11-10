@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pre-owned Porsche for sale | Make Motorworks</title>
+  <meta name="description" content="Inspected pre-owned Porsche 911, 718, Cayenne, Macan, Panamera and Taycan. Reserve a car online with a deposit.">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="hero__status"><span class="pulse" aria-hidden="true"></span><span data-stock>Checking stock</span></p>
+        <h1>Pre-owned Porsche, inspected before it reaches the lot.</h1>
+        <p class="hero__lede">Every car comes with its service history and our inspection report. Reserve one online with a <span data-deposit>deposit</span>, taken off the final price.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#inventory">Browse the inventory</a>
+          <a class="btn btn--line" href="#how">How buying works</a>
+        </div>
+      </div>
+      <div class="stage" data-feature aria-hidden="true">
+        <div class="stage__art art skeleton"></div>
+        <div class="hero__caption">
+          <div class="skel-line skeleton" style="width: 30%"></div>
+          <div class="skel-line skeleton" style="width: 70%; height: 18px"></div>
+          <div class="skel-line skeleton" style="width: 45%"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="models" aria-labelledby="models-title">
+      <div class="models__head">
+        <h2 class="section-title" id="models-title">Browse by model</h2>
+        <p class="toolbar__count">Pick one to filter the list below</p>
+      </div>
+      <div class="models__row" data-models>
+        <div class="model-tile skeleton" aria-hidden="true"></div>
+        <div class="model-tile skeleton" aria-hidden="true"></div>
+        <div class="model-tile skeleton" aria-hidden="true"></div>
+        <div class="model-tile skeleton" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <div class="shop" id="inventory">
+      <aside class="filters" id="filters" aria-label="Filters">
+        <div class="filters__head">
+          <h2>Filters</h2>
+          <button class="link-button" type="button" data-close-filters>Close</button>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="q">Search</label>
+          <input class="input" id="q" type="search" placeholder="Model, trim or colour" autocomplete="off">
+        </div>
+
+        <div data-facets></div>
+
+        <fieldset class="filter-group">
+          <legend>Price</legend>
+          <div class="range">
+            <input class="input" id="min" type="number" inputmode="numeric" min="0" step="1000" placeholder="Min" aria-label="Minimum price">
+            <input class="input" id="max" type="number" inputmode="numeric" min="0" step="1000" placeholder="Max" aria-label="Maximum price">
+          </div>
+        </fieldset>
+
+        <fieldset class="filter-group">
+          <legend>Year</legend>
+          <div class="range">
+            <select class="select" id="from" aria-label="Year from"></select>
+            <select class="select" id="to" aria-label="Year to"></select>
+          </div>
+        </fieldset>
+
+        <div class="filter-group">
+          <label class="filter-label" for="miles">Mileage</label>
+          <select class="select" id="miles">
+            <option value="">Any</option>
+            <option value="10000">Up to 10,000 mi</option>
+            <option value="20000">Up to 20,000 mi</option>
+            <option value="30000">Up to 30,000 mi</option>
+            <option value="50000">Up to 50,000 mi</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="check"><input type="checkbox" id="available"> Hide reserved cars</label>
+        </div>
+
+        <button class="btn btn--primary filters__apply" type="button" data-close-filters>Show cars</button>
+      </aside>
+
+      <section aria-label="Cars">
+        <div class="toolbar">
+          <button class="btn btn--line filters-toggle" type="button" aria-controls="filters" aria-expanded="false">Filters</button>
+          <p class="toolbar__count" aria-live="polite" data-count></p>
+          <label class="toolbar__sort">
+            <span>Sort</span>
+            <select class="select" id="sort">
+              <option value="featured">Recently added</option>
+              <option value="price-asc">Price, low to high</option>
+              <option value="price-desc">Price, high to low</option>
+              <option value="mileage-asc">Lowest mileage</option>
+              <option value="year-desc">Newest year</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" data-chips></div>
+        <div class="grid" data-grid aria-busy="true"></div>
+      </section>
+    </div>
+
+    <section class="steps" id="how">
+      <div class="steps__intro">
+        <h2>How buying works</h2>
+        <p>You can stop at any point before signing the purchase agreement and get your deposit back.</p>
+      </div>
+      <ol class="steps__list">
+        <li>
+          <span class="num">01</span>
+          <div>
+            <h3>Reserve online</h3>
+            <p>Pay a <span data-deposit>deposit</span> by card. The car comes off the market the same day.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <div>
+            <h3>Inspect and drive</h3>
+            <p>We call you to book a viewing and a test drive. Bring your own mechanic if you like.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <div>
+            <h3>Pay and collect</h3>
+            <p>Pay the balance by bank transfer or finance. The deposit is taken off the price.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
