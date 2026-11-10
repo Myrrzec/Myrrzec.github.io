@@ -6,3 +6,6 @@ if(!reduced){let busy=false;addEventListener('scroll',()=>{if(busy)return;busy=t
 const explore=document.querySelector('#explore');const studio=()=>import('./explore.js');
 for(const type of ['pointerenter','focus','touchstart'])explore.addEventListener(type,()=>studio().catch(()=>{}),{once:true,passive:true});
 explore.addEventListener('click',async()=>{try{(await studio()).enter()}catch{const note=document.querySelector('#explore-note');note.hidden=false;note.textContent="The 3D studio couldn't start. Please reload the page and try again."}});
+// Every other "studio" link opens the same studio; ./#studio from another page opens it on arrival.
+document.querySelectorAll('[data-studio]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();explore.click()}));
+if(location.hash==='#studio'){history.replaceState(null,'',location.pathname+location.search);explore.click()}
